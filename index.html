@@ -18,20 +18,27 @@
         .accordion-content { max-height: 0; overflow: hidden; transition: max-height 0.5s ease-out; }
         .tab-button.active { background-color: #0369a1; /* sky-700 */ color: white; }
         .tab-button { background-color: #e0f2fe; /* sky-100 */ color: #0c4a6e; /* sky-800 */ }
-        /* Added rules to prevent text overflow within cards */
-        .card p, .card ul, .card li, .card h3 { /* Apply wrapping to paragraphs, lists, and headings */
-            word-break: break-word; /* Ensures long words break to fit */
-            overflow-wrap: break-word; /* Ensures long words break to fit */
-            min-width: 0; /* Important for flex/grid items to allow content to shrink */
+        .card p, .card ul, .card li, .card h3 { 
+            word-break: break-word; 
+            overflow-wrap: break-word; 
+            min-width: 0; 
         }
-        /* Ensure the flex container within the card allows its children to wrap */
-        .card .flex-wrap-container { /* New class for the flex container holding icon and title */
-            flex-wrap: wrap; /* Allows items to wrap to the next line */
-            min-width: 0; /* Ensures the container itself can shrink */
+        .card .flex-wrap-container { 
+            flex-wrap: wrap; 
+            min-width: 0; 
         }
-        /* Ensure the flex-grow item (main text) can shrink */
         .card .flex-grow {
-            min-width: 0; /* Allow the flex-grow item to shrink */
+            min-width: 0; 
+        }
+        .footnote-link {
+            font-weight: bold;
+            color: #0ea5e9; /* sky-500 */
+            text-decoration: none;
+            vertical-align: super;
+            font-size: 0.75em;
+        }
+        .footnote-link:hover {
+            text-decoration: underline;
         }
     </style>
 </head>
@@ -53,6 +60,7 @@
                         <a href="#competition" class="nav-link px-3 py-2 rounded-md text-sm font-medium text-slate-700 hover:text-sky-600">Wettbewerb</a>
                         <a href="#ethics" class="nav-link px-3 py-2 rounded-md text-sm font-medium text-slate-700 hover:text-sky-600">Ethik & Zukunft</a>
                         <a href="#sources" class="nav-link px-3 py-2 rounded-md text-sm font-medium text-slate-700 hover:text-sky-600">Quellen</a>
+                        <a href="#source-appraisal" class="nav-link px-3 py-2 rounded-md text-sm font-medium text-slate-700 hover:text-sky-600">Quellenbewertung</a>
                     </div>
                 </div>
                 <div class="md:hidden">
@@ -77,6 +85,7 @@
                 <a href="#competition" class="nav-link block px-3 py-2 rounded-md text-base font-medium text-slate-700 hover:text-sky-600 hover:bg-slate-50">Wettbewerb</a>
                 <a href="#ethics" class="nav-link block px-3 py-2 rounded-md text-base font-medium text-slate-700 hover:text-sky-600 hover:bg-slate-50">Ethik & Zukunft</a>
                 <a href="#sources" class="nav-link block px-3 py-2 rounded-md text-base font-medium text-slate-700 hover:text-sky-600 hover:bg-slate-50">Quellen</a>
+                <a href="#source-appraisal" class="nav-link block px-3 py-2 rounded-md text-base font-medium text-slate-700 hover:text-sky-600 hover:bg-slate-50">Quellenbewertung</a>
             </div>
         </div>
     </header>
@@ -96,7 +105,7 @@
                 <div class="card bg-sky-600 text-white">
                     <h3 class="text-xl font-semibold mb-2">Schon gewusst?</h3>
                     <p class="text-3xl font-bold" id="dynamicStatValue">10 PB+</p>
-                    <p>Daten werden allein im Cloud Data Hub von BMW verwaltet, was die enorme Datenmenge verdeutlicht (Quelle: AWS [3]).</p>
+                    <p>Daten werden allein im Cloud Data Hub von BMW verwaltet, was die enorme Datenmenge verdeutlicht (Quelle: AWS <span class="footnote-ref">3</span>).</p>
                 </div>
             </div>
              <p class="mt-4">
@@ -114,7 +123,7 @@
                         <span class="text-3xl mr-3">📊</span>
                         <h3 class="text-2xl font-semibold text-sky-600">Volume (Menge)</h3>
                     </div>
-                    <p>BMW verarbeitet täglich Terabytes an Daten, insgesamt Petabytes. Der Cloud Data Hub (CDH) allein verwaltet über 10 PB Daten [3] und verarbeitet täglich 10 TB von 1,2 Mio. Fahrzeugen [2]. Die My BMW & MINI Apps generieren ca. 450 Mio. Anfragen und 3,2 TB Daten pro Tag [4].</p>
+                    <p>BMW verarbeitet täglich Terabytes an Daten, insgesamt Petabytes. Der Cloud Data Hub (CDH) allein verwaltet über 10 PB Daten <span class="footnote-ref">3</span> und verarbeitet täglich 10 TB von 1,2 Mio. Fahrzeugen <span class="footnote-ref">2</span>. Die My BMW & MINI Apps generieren ca. 450 Mio. Anfragen und 3,2 TB Daten pro Tag <span class="footnote-ref">4</span>.</p>
                     <div class="mt-4 chart-container mx-auto h-64 sm:h-72">
                         <canvas id="volumeChart"></canvas>
                     </div>
@@ -128,9 +137,9 @@
                     </div>
                     <p>BMW nutzt eine breite Palette von Datentypen:</p>
                     <ul class="list-disc list-inside mt-2 space-y-1">
-                        <li><strong>Strukturiert:</strong> Transaktions-, CRM-, Fahrzeugstatusdaten [4, 8, 26, 27].</li>
-                        <li><strong>Semistrukturiert:</strong> Logdateien, App-Nutzungsdaten [4, 11, 13].</li>
-                        <li><strong>Unstrukturiert:</strong> Social Media [14], Videos [15], Bilder [9, 10, 16], Sprache [1, 28].</li>
+                        <li><strong>Strukturiert:</strong> Transaktions-, CRM-, Fahrzeugstatusdaten <span class="footnote-ref">4</span>, <span class="footnote-ref">8</span>, <span class="footnote-ref">26</span>, <span class="footnote-ref">27</span>.</li>
+                        <li><strong>Semistrukturiert:</strong> Logdateien, App-Nutzungsdaten <span class="footnote-ref">4</span>, <span class="footnote-ref">11</span>, <span class="footnote-ref">13</span>.</li>
+                        <li><strong>Unstrukturiert:</strong> Social Media <span class="footnote-ref">14</span>, Videos <span class="footnote-ref">15</span>, Bilder <span class="footnote-ref">9</span>, <span class="footnote-ref">10</span>, <span class="footnote-ref">16</span>, Sprache <span class="footnote-ref">1</span>, <span class="footnote-ref">28</span>.</li>
                     </ul>
                     <p class="mt-2">Diese Vielfalt ermöglicht eine 360-Grad-Sicht und komplexe KI-Anwendungen.</p>
                 </div>
@@ -142,10 +151,10 @@
                     </div>
                     <p>Hohe Datenverarbeitungsgeschwindigkeit ist entscheidend:</p>
                     <ul class="list-disc list-inside mt-2 space-y-1">
-                        <li>Echtzeit-Telemetriedaten von Fahrzeugen [2].</li>
-                        <li>450 Mio. tägliche Anfragen im App-Backend [4].</li>
-                        <li>MDR-Datenübertragung in Sekunden [6, 7].</li>
-                        <li>Echtzeit-Verkehrsberechnungen [5].</li>
+                        <li>Echtzeit-Telemetriedaten von Fahrzeugen <span class="footnote-ref">2</span>.</li>
+                        <li>450 Mio. tägliche Anfragen im App-Backend <span class="footnote-ref">4</span>.</li>
+                        <li>MDR-Datenübertragung in Sekunden <span class="footnote-ref">6</span>, <span class="footnote-ref">7</span>.</li>
+                        <li>Echtzeit-Verkehrsberechnungen <span class="footnote-ref">5</span>.</li>
                     </ul>
                     <p class="mt-2">Dies ermöglicht proaktives Handeln und kontinuierliche Optimierung.</p>
                 </div>
@@ -157,11 +166,11 @@
                     </div>
                     <p>BMW stellt Datenqualität sicher durch:</p>
                     <ul class="list-disc list-inside mt-2 space-y-1">
-                        <li>Datentransformations-Pipelines [11].</li>
-                        <li>Automatisierte Tests (dbt) [11].</li>
-                        <li>Menschlich lesbarer Datenkatalog [2].</li>
-                        <li>Privacy by Design [2, 31].</li>
-                        <li>KI zur Qualitätskontrolle [9, 10, 23].</li>
+                        <li>Datentransformations-Pipelines <span class="footnote-ref">11</span>.</li>
+                        <li>Automatisierte Tests (dbt) <span class="footnote-ref">11</span>.</li>
+                        <li>Menschlich lesbarer Datenkatalog <span class="footnote-ref">2</span>.</li>
+                        <li>Privacy by Design <span class="footnote-ref">2</span>, <span class="footnote-ref">31</span>.</li>
+                        <li>KI zur Qualitätskontrolle <span class="footnote-ref">9</span>, <span class="footnote-ref">10</span>, <span class="footnote-ref">23</span>.</li>
                     </ul>
                     <p class="mt-2">Entscheidend für zuverlässige KI und Kundenvertrauen.</p>
                 </div>
@@ -182,11 +191,11 @@
                             </button>
                             <div class="accordion-content p-3 bg-white border rounded-b-md">
                                 <ul class="list-disc list-inside space-y-1">
-                                    <li>Fahrzeugtelemetrie & Sensordaten (Geschwindigkeit, Standort, Motorstatus) [2, 5, 8, 24, 28]</li>
-                                    <li>Produktions-IoT & Sensordaten (Kameras, Fabrikscanner, AIQX) [6, 7, 9, 10]</li>
-                                    <li>Kundendaten (CRM, App-Nutzung, BMW ID) [4, 13, 26]</li>
-                                    <li>Transaktionsdaten (Verkaufshistorie) [27]</li>
-                                    <li>F&E- & Testdaten (FOT, Simulatorstudien) [15]</li>
+                                    <li>Fahrzeugtelemetrie & Sensordaten (Geschwindigkeit, Standort, Motorstatus) <span class="footnote-ref">2</span>, <span class="footnote-ref">5</span>, <span class="footnote-ref">8</span>, <span class="footnote-ref">24</span>, <span class="footnote-ref">28</span></li>
+                                    <li>Produktions-IoT & Sensordaten (Kameras, Fabrikscanner, AIQX) <span class="footnote-ref">6</span>, <span class="footnote-ref">7</span>, <span class="footnote-ref">9</span>, <span class="footnote-ref">10</span></li>
+                                    <li>Kundendaten (CRM, App-Nutzung, BMW ID) <span class="footnote-ref">4</span>, <span class="footnote-ref">13</span>, <span class="footnote-ref">26</span></li>
+                                    <li>Transaktionsdaten (Verkaufshistorie) <span class="footnote-ref">27</span></li>
+                                    <li>F&E- & Testdaten (FOT, Simulatorstudien) <span class="footnote-ref">15</span></li>
                                 </ul>
                             </div>
                         </div>
@@ -196,11 +205,11 @@
                             </button>
                             <div class="accordion-content p-3 bg-white border rounded-b-md">
                                 <ul class="list-disc list-inside space-y-1">
-                                    <li>Social Media Daten [14]</li>
+                                    <li>Social Media Daten <span class="footnote-ref">14</span></li>
                                     <li>Marktforschungsdaten</li>
-                                    <li>Wetter- & Verkehrsdaten [28]</li>
-                                    <li>Partnerdaten (Alibaba, AWS, Microsoft Azure) [1, 2, 3, 4, 5, 6, 7, 11, 12, 17, 25]</li>
-                                    <li>Drohnen-, Unfall-, Lieferantendaten [15, 21]</li>
+                                    <li>Wetter- & Verkehrsdaten <span class="footnote-ref">28</span></li>
+                                    <li>Partnerdaten (Alibaba, AWS, Microsoft Azure) <span class="footnote-ref">1</span>, <span class="footnote-ref">2</span>, <span class="footnote-ref">3</span>, <span class="footnote-ref">4</span>, <span class="footnote-ref">5</span>, <span class="footnote-ref">6</span>, <span class="footnote-ref">7</span>, <span class="footnote-ref">11</span>, <span class="footnote-ref">12</span>, <span class="footnote-ref">17</span>, <span class="footnote-ref">25</span></li>
+                                    <li>Drohnen-, Unfall-, Lieferantendaten <span class="footnote-ref">15</span>, <span class="footnote-ref">21</span></li>
                                 </ul>
                             </div>
                         </div>
@@ -219,12 +228,12 @@
                             </div>
                             <div class="flex items-center">
                                 <span class="bg-sky-200 text-sky-700 px-2 py-1 rounded-md mr-2">Speicherung & Transformation</span>
-                                <span class="text-slate-600">Cloud Data Hub (AWS S3), Azure, Datenpipelines (dbt, Athena) [2, 3, 4, 6, 7, 11, 25]</span>
+                                <span class="text-slate-600">Cloud Data Hub (AWS S3), Azure, Datenpipelines (dbt, Athena) <span class="footnote-ref">2</span>, <span class="footnote-ref">3</span>, <span class="footnote-ref">4</span>, <span class="footnote-ref">6</span>, <span class="footnote-ref">7</span>, <span class="footnote-ref">11</span>, <span class="footnote-ref">25</span></span>
                                 <span class="mx-2">➔</span>
                             </div>
                             <div class="flex items-center">
                                 <span class="bg-sky-200 text-sky-700 px-2 py-1 rounded-md mr-2">Analyse & KI/ML</span>
-                                <span class="text-slate-600">SageMaker, GenAI, NLP [1, 2, 12, 28, 30, 33]</span>
+                                <span class="text-slate-600">SageMaker, GenAI, NLP <span class="footnote-ref">1</span>, <span class="footnote-ref">2</span>, <span class="footnote-ref">12</span>, <span class="footnote-ref">28</span>, <span class="footnote-ref">30</span>, <span class="footnote-ref">33</span></span>
                                 <span class="mx-2">➔</span>
                             </div>
                              <div class="flex items-center">
@@ -274,33 +283,33 @@
                         <tr>
                             <td class="px-6 py-4 whitespace-nowrap font-semibold">Primärer Fokus</td>
                             <td class="px-6 py-4">Ganzheitlich (Produktion, Connected Car, Kundenerlebnis, F&E, Lieferkette)</td>
-                            <td class="px-6 py-4">Produktionseffizienz, Digitale Dienste [34, 46]</td>
-                            <td class="px-6 py-4">Produktionsoptimierung, Fahrerassistenz [37, 40, 47, 48]</td>
-                            <td class="px-6 py-4">Autonomes Fahren (FSD), Fahrzeugleistung [18, 42, 43, 44]</td>
+                            <td class="px-6 py-4">Produktionseffizienz, Digitale Dienste <span class="footnote-ref">34</span>, <span class="footnote-ref">46</span></td>
+                            <td class="px-6 py-4">Produktionsoptimierung, Fahrerassistenz <span class="footnote-ref">37</span>, <span class="footnote-ref">40</span>, <span class="footnote-ref">47</span>, <span class="footnote-ref">48</span></td>
+                            <td class="px-6 py-4">Autonomes Fahren (FSD), Fahrzeugleistung <span class="footnote-ref">18</span>, <span class="footnote-ref">42</span>, <span class="footnote-ref">43</span>, <span class="footnote-ref">44</span></td>
                         </tr>
                         <tr>
                             <td class="px-6 py-4 whitespace-nowrap font-semibold">Cloud-Strategie</td>
-                            <td class="px-6 py-4">Multi-Cloud (AWS CDH, Azure für Apps/F&E) [2, 3, 4, 5, 6, 7, 11, 12, 17, 25]</td>
-                            <td class="px-6 py-4">Microsoft Azure, Qlik [34, 46]</td>
-                            <td class="px-6 py-4">Edge Cloud 4 Produktion [47]</td>
+                            <td class="px-6 py-4">Multi-Cloud (AWS CDH, Azure für Apps/F&E) <span class="footnote-ref">2</span>, <span class="footnote-ref">3</span>, <span class="footnote-ref">4</span>, <span class="footnote-ref">5</span>, <span class="footnote-ref">6</span>, <span class="footnote-ref">7</span>, <span class="footnote-ref">11</span>, <span class="footnote-ref">12</span>, <span class="footnote-ref">17</span>, <span class="footnote-ref">25</span></td>
+                            <td class="px-6 py-4">Microsoft Azure, Qlik <span class="footnote-ref">34</span>, <span class="footnote-ref">46</span></td>
+                            <td class="px-6 py-4">Edge Cloud 4 Produktion <span class="footnote-ref">47</span></td>
                             <td class="px-6 py-4">Eigene Rechenzentren</td>
                         </tr>
                         <tr>
                             <td class="px-6 py-4 whitespace-nowrap font-semibold">KI-Innovationsansatz</td>
-                            <td class="px-6 py-4">In-House-KI, GenAI, Open-Source-Algorithmen, Synthetische Daten [9, 10, 16, 17, 30, 33, 49]</td>
-                            <td class="px-6 py-4">KI/ML für prädiktive Modelle [34]</td>
-                            <td class="px-6 py-4">KI in Produktion (100+ Anwendungsfälle) [40]</td>
-                            <td class="px-6 py-4">Deep Learning für FSD, OTA-Updates [18, 42, 43]</td>
+                            <td class="px-6 py-4">In-House-KI, GenAI, Open-Source-Algorithmen, Synthetische Daten <span class="footnote-ref">9</span>, <span class="footnote-ref">10</span>, <span class="footnote-ref">16</span>, <span class="footnote-ref">17</span>, <span class="footnote-ref">30</span>, <span class="footnote-ref">33</span>, <span class="footnote-ref">49</span></td>
+                            <td class="px-6 py-4">KI/ML für prädiktive Modelle <span class="footnote-ref">34</span></td>
+                            <td class="px-6 py-4">KI in Produktion (100+ Anwendungsfälle) <span class="footnote-ref">40</span></td>
+                            <td class="px-6 py-4">Deep Learning für FSD, OTA-Updates <span class="footnote-ref">18</span>, <span class="footnote-ref">42</span>, <span class="footnote-ref">43</span></td>
                         </tr>
                          <tr>
                             <td class="px-6 py-4 whitespace-nowrap font-semibold">BMWs Differenzierung</td>
                             <td colspan="4" class="px-6 py-4">
                                 <ul class="list-disc list-inside space-y-1">
-                                    <li>Pionier bei In-House-KI für Produktion [37]</li>
-                                    <li>Umfassende Multi-Cloud-Strategie [2, 3, 4, 5, 6, 7, 11, 12, 17, 25]</li>
-                                    <li>Open-Source-Initiativen (GitHub) [49]</li>
-                                    <li>Einzigartige Datenbestände (FOT, SORDI) [15, 16]</li>
-                                    <li>Ausgewogener KI-Ansatz mit starken ethischen Richtlinien [1, 9, 10, 50, 51]</li>
+                                    <li>Pionier bei In-House-KI für Produktion <span class="footnote-ref">37</span></li>
+                                    <li>Umfassende Multi-Cloud-Strategie <span class="footnote-ref">2</span>, <span class="footnote-ref">3</span>, <span class="footnote-ref">4</span>, <span class="footnote-ref">5</span>, <span class="footnote-ref">6</span>, <span class="footnote-ref">7</span>, <span class="footnote-ref">11</span>, <span class="footnote-ref">12</span>, <span class="footnote-ref">17</span>, <span class="footnote-ref">25</span></li>
+                                    <li>Open-Source-Initiativen (GitHub) <span class="footnote-ref">49</span></li>
+                                    <li>Einzigartige Datenbestände (FOT, SORDI) <span class="footnote-ref">15</span>, <span class="footnote-ref">16</span></li>
+                                    <li>Ausgewogener KI-Ansatz mit starken ethischen Richtlinien <span class="footnote-ref">1</span>, <span class="footnote-ref">9</span>, <span class="footnote-ref">10</span>, <span class="footnote-ref">50</span>, <span class="footnote-ref">51</span></li>
                                 </ul>
                             </td>
                         </tr>
@@ -316,11 +325,11 @@
                 <div class="card">
                     <h3 class="text-2xl font-semibold mb-3 text-sky-600">KI: Rolle & Zukunftsausblick</h3>
                     <ul class="list-disc list-inside space-y-1">
-                        <li>Umfassende Integration zur Verbesserung von Kundenerlebnis, Produktqualität und Effizienz [50].</li>
-                        <li>Systematischer Einsatz von Generativer KI (GenAI) im Einkauf und Cloud-Management [12, 30, 33].</li>
-                        <li>Beschleunigte KI-Integration in China [1].</li>
-                        <li>"Superhirne" in Neue Klasse Modellen ab 2025 mit 20x Rechenleistung für KI [5, 33].</li>
-                        <li>Zukünftige GenAI-Anwendungen für proaktive Lieferkettenüberwachung und Optimierung [30].</li>
+                        <li>Umfassende Integration zur Verbesserung von Kundenerlebnis, Produktqualität und Effizienz <span class="footnote-ref">50</span>.</li>
+                        <li>Systematischer Einsatz von Generativer KI (GenAI) im Einkauf und Cloud-Management <span class="footnote-ref">12</span>, <span class="footnote-ref">30</span>, <span class="footnote-ref">33</span>.</li>
+                        <li>Beschleunigte KI-Integration in China <span class="footnote-ref">1</span>.</li>
+                        <li>"Superhirne" in Neue Klasse Modellen ab 2025 mit 20x Rechenleistung für KI <span class="footnote-ref">5</span>, <span class="footnote-ref">33</span>.</li>
+                        <li>Zukünftige GenAI-Anwendungen für proaktive Lieferkettenüberwachung und Optimierung <span class="footnote-ref">30</span>.</li>
                     </ul>
                 </div>
                  <div class="card">
@@ -331,11 +340,11 @@
                         </button>
                         <div class="accordion-content p-3 bg-white border rounded-b-md">
                             <ul class="list-disc list-inside space-y-1">
-                                <li>Höchste Priorität für Vertraulichkeit und Integrität [22].</li>
-                                <li>DSGVO- und CCPA-Konformität [8].</li>
-                                <li>Zustimmungsmanagement (CarData) [8, 24, 31, 52].</li>
-                                <li>Sichere Speicherung & Übertragung [8, 22].</li>
-                                <li>Privacy by Design [31].</li>
+                                <li>Höchste Priorität für Vertraulichkeit und Integrität <span class="footnote-ref">22</span>.</li>
+                                <li>DSGVO- und CCPA-Konformität <span class="footnote-ref">8</span>.</li>
+                                <li>Zustimmungsmanagement (CarData) <span class="footnote-ref">8</span>, <span class="footnote-ref">24</span>, <span class="footnote-ref">31</span>, <span class="footnote-ref">52</span>.</li>
+                                <li>Sichere Speicherung & Übertragung <span class="footnote-ref">8</span>, <span class="footnote-ref">22</span>.</li>
+                                <li>Privacy by Design <span class="footnote-ref">31</span>.</li>
                             </ul>
                         </div>
                     </div>
@@ -345,10 +354,10 @@
                         </button>
                         <div class="accordion-content p-3 bg-white border rounded-b-md">
                             <ul class="list-disc list-inside space-y-1">
-                                <li>Verantwortungsvoller KI-Einsatz zur Vermeidung von Schäden und Bias [50].</li>
-                                <li>Strenge Tests mit Human-in-the-Loop [32].</li>
-                                <li>Ethik-Kodex für KI basierend auf EU-Richtlinien (7 Prinzipien) [50, 51].</li>
-                                <li>Mitarbeiterschulung [33].</li>
+                                <li>Verantwortungsvoller KI-Einsatz zur Vermeidung von Schäden und Bias <span class="footnote-ref">50</span>.</li>
+                                <li>Strenge Tests mit Human-in-the-Loop <span class="footnote-ref">32</span>.</li>
+                                <li>Ethik-Kodex für KI basierend auf EU-Richtlinien (7 Prinzipien) <span class="footnote-ref">50</span>, <span class="footnote-ref">51</span>.</li>
+                                <li>Mitarbeiterschulung <span class="footnote-ref">33</span>.</li>
                             </ul>
                         </div>
                     </div>
@@ -358,9 +367,9 @@
                         </button>
                         <div class="accordion-content p-3 bg-white border rounded-b-md">
                             <ul class="list-disc list-inside space-y-1">
-                                <li>Transparenzinitiativen (CarData-Berichte) [8].</li>
-                                <li>In-Fahrzeug-Datenschutzeinstellungen [13, 52].</li>
-                                <li>Zustimmungsbasiertes Modell [8].</li>
+                                <li>Transparenzinitiativen (CarData-Berichte) <span class="footnote-ref">8</span>.</li>
+                                <li>In-Fahrzeug-Datenschutzeinstellungen <span class="footnote-ref">13</span>, <span class="footnote-ref">52</span>.</li>
+                                <li>Zustimmungsbasiertes Modell <span class="footnote-ref">8</span>.</li>
                             </ul>
                         </div>
                     </div>
@@ -382,7 +391,7 @@
         <section id="conclusion" class="mb-12 scroll-mt-20">
             <h2 class="section-title text-3xl font-bold mb-6 text-sky-700">Fazit</h2>
             <div class="card">
-                <p class="mb-4">Die BMW Group hat sich als Vorreiter bei der Nutzung von Big Data und KI etabliert und wandelt sich von einem traditionellen Automobilhersteller zu einem datengesteuerten Mobilitätsanbieter.</p>
+                <p class="mb-4">Die BMW Group hat sich als Vorreiter bei der Nutzung von Big Data und KI etabliert und wandelt sich von einem traditionellen Automobilhersteller zu einem datengesteuerten Mobilitätsdienstleister.</p>
                 <p class="mb-4">Strategische Investitionen in Cloud-Plattformen, umfassende Datenerfassung und KI-Anwendungen entlang der Wertschöpfungskette untermauern dieses Engagement. Die proaktive Haltung zu ethischer KI und Datenschutz festigt die Führungsposition.</p>
                 <p>Die Zukunft der Mobilität wird zunehmend personalisiert, autonom und nahtlos integriert sein. BMWs strategischer Ansatz im Umgang mit Big Data und KI sichert dem Unternehmen Relevanz und einen entscheidenden Wettbewerbsvorteil im Zeitalter der intelligenten Mobilität.</p>
             </div>
@@ -392,58 +401,119 @@
             <h2 class="section-title text-3xl font-bold mb-6 text-sky-700">Quellen</h2>
             <div class="card">
                 <ol class="list-decimal list-inside space-y-2 text-sm">
-                    <li>[1] [https://autonews.gasgoo.com/new_energy/70036512.html](https://autonews.gasgoo.com/new_energy/70036512.html)</li>
-                    <li>[2] [https://aws.amazon.com/solutions/case-studies/bmw-group-case-study/](https://aws.amazon.com/solutions/case-studies/bmw-group-case-study/)</li>
-                    <li>[3] [https://aws.amazon.com/blogs/big-data/how-bmw-streamlined-data-access-using-aws-lake-formation-fine-grained-access-control/](https://aws.amazon.com/blogs/big-data/how-bmw-streamlined-data-access-using-aws-lake-formation-fine-grained-access-control/)</li>
-                    <li>[4] [https://www.microsoft.com/en/customers/story/18757-bmw-group-azure](https://www.microsoft.com/en/customers/story/18757-bmw-group-azure)</li>
-                    <li>[5] [https://www.youtube.com/watch?v=f246b185631/](https://www.youtube.com/watch?v=f246b185631/)</li>
-                    <li>[6] [https://www.microsoft.com/en/customers/story/19769-bmw-ag-azure-app-service](https://www.microsoft.com/en/customers/story/19769-bmw-ag-azure-app-service)</li>
-                    <li>[7] [https://technologymagazine.com/articles/bmw-microsoft-turbocharging-vehicle-development-with-ai](https://technologymagazine.com/articles/bmw-microsoft-turbocharging-vehicle-development-with-ai)</li>
-                    <li>[8] [https://www.bmwgroup.com/en/innovation/connected-car/cardata.html](https://www.bmwgroup.com/en/innovation/connected-car/cardata.html)</li>
-                    <li>[9] [https://disruptionhub.com/how-does-bmw-use-ai/](https://disruptionhub.com/how-does-bmw-use-ai/)</li>
-                    <li>[10] [https://www.virtasant.com/ai-today/ai-in-product-development-netflix-bmw/](https://www.virtasant.com/ai-today/ai-in-product-development-netflix-bmw/)</li>
-                    <li>[11] [https://aws.amazon.com/blogs/big-data/how-bmw-group-built-a-serverless-terabyte-scale-data-transformation-architecture-with-dbt-and-amazon-athena/](https://aws.amazon.com/blogs/big-data/how-bmw-group-built-a-serverless-terabyte-scale-data-transformation-architecture-with-dbt-and-amazon-athena/)</li>
-                    <li>[12] [https://aws.amazon.com/blogs/machine-learning/innovating-at-speed-bmws-generative-ai-solution-for-cloud-incident-analysis/](https://aws.amazon.com/blogs/machine-learning/innovating-at-speed-bmws-generative-ai-solution-for-cloud-incident-analysis/)</li>
-                    <li>[13] [https://faq.bmwusa.com/s/article/BMW-iDrive-OS7-Personalization-Data-protection-htGtM?language=en_US](https://faq.bmwusa.com/s/article/BMW-iDrive-OS7-Personalization-Data-protection-htGtM?language=en_US)</li>
-                    <li>[14] [https://www.sprintzeal.com/blog/bmw-marketing-strategy](https://www.sprintzeal.com/blog/bmw-marketing-strategy)</li>
-                    <li>[15] [https://www.bmwgroup.com/scm-driver/en/get-to-know-scm/data-for-parametrisation.html](https://www.bmwgroup.com/scm-driver/en/get-to-know-scm/data-for-parametrisation.html)</li>
-                    <li>[16] [https://www.nvidia.com/en-us/case-studies/bmw-optimizes-production-with-ai-and-dgx-systems/](https://www.nvidia.com/en-us/case-studies/bmw-optimizes-production-with-ai-and-dgx-systems/)</li>
-                    <li>[17] [https://www.youtube.com/watch?v=WeNlAbIDgp4](https://www.youtube.com/watch?v=WeNlAbIDgp4)</li>
-                    <li>[18] [https://www.cleverence.com/articles/business-blogs/how-tesla-and-bmw-use-ai-driven-predictive-maintenance-to-reduce-downtime/](https://www.cleverence.com/articles/business-blogs/how-tesla-and-bmw-use-ai-driven-predictive-maintenance-to-reduce-downtime/)</li>
-                    <li>[19] [https://grjenkin.com/articles/category/big-data/6689694/03/12/2024/how-bmw-uses-artificial-intelligence-and-big-data-to-design-and-build-cars-of-tomorrow-7wdata/](https://grjenkin.com/articles/category/big-data/6689694/03/12/2024/how-bmw-uses-artificial-intelligence-and-big-data-to-design-and-build-cars-of-tomorrow-7wdata/)</li>
-                    <li>[20] [https://www.youtube.com/watch?v=GvlEstLPp9s](https://www.youtube.com/watch?v=GvlEstLPp9s)</li>
-                    <li>[21] [https://www.xenonstack.com/blog/supply-chains-in-automotive-industry](https://www.xenonstack.com/blog/supply-chains-in-automotive-industry)</li>
-                    <li>[22] [https://www.bmwgroup.com/en/general/data_privacy.html](https://www.bmwgroup.com/en/general/data_privacy.html)</li>
-                    <li>[23] [https://www.automotiveworld.com/news-releases/bmw-group-artificial-intelligence-as-a-quality-booster/](https://www.automotiveworld.com/news-releases/bmw-group-artificial-intelligence-as-a-quality-booster/)</li>
-                    <li>[24] [https://www.youtube.com/watch?v=36k_4KaDt5c](https://www.youtube.com/watch?v=36k_4KaDt5c)</li>
-                    <li>[25] [https://aws.amazon.com/solutions/case-studies/innovators/bmw/](https://www.aws.amazon.com/solutions/case-studies/innovators/bmw/)</li>
-                    <li>[26] [https://www.bmwusa.com/explore/connecteddrive.html](https://www.bmwusa.com/explore/connecteddrive.html)</li>
-                    <li>[27] [https://www.cleverence.com/articles/business-blogs/how-toyota-and-bmw-dealerships-use-predictive-analytics-to-manage-inventory/](https://www.cleverence.com/articles/business-blogs/how-toyota-and-bmw-dealerships-use-predictive-analytics-to-manage-inventory/)</li>
-                    <li>[28] [https://patentpc.com/blog/ai-and-bmw-patenting-the-future-of-cars](https://patentpc.com/blog/ai-and-bmw-patenting-the-future-of-cars)</li>
-                    <li>[29] [https://www.youtube.com/watch?v=ca57wdzaibU](https://www.youtube.com/watch?v=ca57wdzaibU)</li>
-                    <li>[30] [https://www.automotiveworld.com/news-releases/greater-efficiency-and-productivity-with-artificial-intelligence-generative-ai-in-bmw-group-purchasing/](https://www.automotiveworld.com/news-releases/greater-efficiency-and-productivity-with-artificial-intelligence-generative-ai-in-bmw-group-purchasing/)</li>
-                    <li>[31] [https://patentpc.com/blog/the-privacy-debate-around-bmws-connected-car-patents](https://patentpc.com/blog/the-privacy-debate-around-bmws-connected-car-patents)</li>
-                    <li>[32] [https://think-it.io/ai-product-development](https://think-it.io/ai-product-development)</li>
-                    <li>[33] [https://www.bmwgroup.com/en/report/2024/downloads/BMW-Group-Report-2024-en.pdf](https://www.bmwgroup.com/en/report/2024/downloads/BMW-Group-Report-2024-en.pdf)</li>
-                    <li>[34] [https://www.mercedes-benz-mobility.com/en/who-we-are/stories/creating-value-with-technology/](https://www.mercedes-benz-mobility.com/en/who-we-are/stories/creating-value-with-technology/)</li>
-                    <li>[35] [https://inmind.ai/case-study/palantir-bmw-group/](https://inmind.ai/case-study/palantir-bmw-group/)</li>
-                    <li>[36] [https://jobs.bmwgroup.com/job/Munich-Intern-Data-Science-%28fmx%29-BY-80809/1169460401/](https://jobs.bmwgroup.com/job/Munich-Intern-Data-Science-%28fmx%29-BY-80809/1169460401/)</li>
-                    <li>[37] [https://www.gisma.com/blog/from-audi-to-mercedes-how-ai-and-data-science-are-shaping-the-new-generation-of-cars](https://www.gisma.com/blog/from-audi-to-mercedes-how-ai-and-data-science-are-shaping-the-new-generation-of-cars)</li>
+                    <li><a href="https://autonews.gasgoo.com/new_energy/70036512.html" target="_blank" class="text-sky-700 hover:underline">[1] https://autonews.gasgoo.com/new_energy/70036512.html</a></li>
+                    <li><a href="https://aws.amazon.com/solutions/case-studies/bmw-group-case-study/" target="_blank" class="text-sky-700 hover:underline">[2] https://aws.amazon.com/solutions/case-studies/bmw-group-case-study/</a></li>
+                    <li><a href="https://aws.amazon.com/blogs/big-data/how-bmw-streamlined-data-access-using-aws-lake-formation-fine-grained-access-control/" target="_blank" class="text-sky-700 hover:underline">[3] https://aws.amazon.com/blogs/big-data/how-bmw-streamlined-data-access-using-aws-lake-formation-fine-grained-access-control/</a></li>
+                    <li><a href="https://www.microsoft.com/en/customers/story/18757-bmw-group-azure" target="_blank" class="text-sky-700 hover:underline">[4] https://www.microsoft.com/en/customers/story/18757-bmw-group-azure</a></li>
+                    <li><a href="https://www.youtube.com/watch?v=f246b185631/" target="_blank" class="text-sky-700 hover:underline">[5] https://www.youtube.com/watch?v=f246b185631/</a></li>
+                    <li><a href="https://www.microsoft.com/en/customers/story/19769-bmw-ag-azure-app-service" target="_blank" class="text-sky-700 hover:underline">[6] https://www.microsoft.com/en/customers/story/19769-bmw-ag-azure-app-service</a></li>
+                    <li><a href="https://technologymagazine.com/articles/bmw-microsoft-turbocharging-vehicle-development-with-ai" target="_blank" class="text-sky-700 hover:underline">[7] https://technologymagazine.com/articles/bmw-microsoft-turbocharging-vehicle-development-with-ai</a></li>
+                    <li><a href="https://www.bmwgroup.com/en/innovation/connected-car/cardata.html" target="_blank" class="text-sky-700 hover:underline">[8] https://www.bmwgroup.com/en/innovation/connected-car/cardata.html</a></li>
+                    <li><a href="https://disruptionhub.com/how-does-bmw-use-ai/" target="_blank" class="text-sky-700 hover:underline">[9] https://disruptionhub.com/how-does-bmw-use-ai/</a></li>
+                    <li><a href="https://www.virtasant.com/ai-today/ai-in-product-development-netflix-bmw/" target="_blank" class="text-sky-700 hover:underline">[10] https://www.virtasant.com/ai-today/ai-in-product-development-netflix-bmw/</a></li>
+                    <li><a href="https://aws.amazon.com/blogs/big-data/how-bmw-group-built-a-serverless-terabyte-scale-data-transformation-architecture-with-dbt-and-amazon-athena/" target="_blank" class="text-sky-700 hover:underline">[11] https://aws.amazon.com/blogs/big-data/how-bmw-group-built-a-serverless-terabyte-scale-data-transformation-architecture-with-dbt-and-amazon-athena/</a></li>
+                    <li><a href="https://aws.amazon.com/blogs/machine-learning/innovating-at-speed-bmws-generative-ai-solution-for-cloud-incident-analysis/" target="_blank" class="text-sky-700 hover:underline">[12] https://aws.amazon.com/blogs/machine-learning/innovating-at-speed-bmws-generative-ai-solution-for-cloud-incident-analysis/</a></li>
+                    <li><a href="https://faq.bmwusa.com/s/article/BMW-iDrive-OS7-Personalization-Data-protection-htGtM?language=en_US" target="_blank" class="text-sky-700 hover:underline">[13] https://faq.bmwusa.com/s/article/BMW-iDrive-OS7-Personalization-Data-protection-htGtM?language=en_US</a></li>
+                    <li><a href="https://www.sprintzeal.com/blog/bmw-marketing-strategy" target="_blank" class="text-sky-700 hover:underline">[14] https://www.sprintzeal.com/blog/bmw-marketing-strategy</a></li>
+                    <li><a href="https://www.bmwgroup.com/scm-driver/en/get-to-know-scm/data-for-parametrisation.html" target="_blank" class="text-sky-700 hover:underline">[15] https://www.bmwgroup.com/scm-driver/en/get-to-know-scm/data-for-parametrisation.html</a></li>
+                    <li><a href="https://www.nvidia.com/en-us/case-studies/bmw-optimizes-production-with-ai-and-dgx-systems/" target="_blank" class="text-sky-700 hover:underline">[16] https://www.nvidia.com/en-us/case-studies/bmw-optimizes-production-with-ai-and-dgx-systems/</a></li>
+                    <li><a href="https://www.youtube.com/watch?v=WeNlAbIDgp4" target="_blank" class="text-sky-700 hover:underline">[17] https://www.youtube.com/watch?v=WeNlAbIDgp4</a></li>
+                    <li><a href="https://www.cleverence.com/articles/business-blogs/how-tesla-and-bmw-use-ai-driven-predictive-maintenance-to-reduce-downtime/" target="_blank" class="text-sky-700 hover:underline">[18] https://www.cleverence.com/articles/business-blogs/how-tesla-and-bmw-use-ai-driven-predictive-maintenance-to-reduce-downtime/</a></li>
+                    <li><a href="https://grjenkin.com/articles/category/big-data/6689694/03/12/2024/how-bmw-uses-artificial-intelligence-and-big-data-to-design-and-build-cars-of-tomorrow-7wdata/" target="_blank" class="text-sky-700 hover:underline">[19] https://grjenkin.com/articles/category/big-data/6689694/03/12/2024/how-bmw-uses-artificial-intelligence-and-big-data-to-design-and-build-cars-of-tomorrow-7wdata/</a></li>
+                    <li><a href="https://www.youtube.com/watch?v=GvlEstLPp9s" target="_blank" class="text-sky-700 hover:underline">[20] https://www.youtube.com/watch?v=GvlEstLPp9s</a></li>
+                    <li><a href="https://www.xenonstack.com/blog/supply-chains-in-automotive-industry" target="_blank" class="text-sky-700 hover:underline">[21] https://www.xenonstack.com/blog/supply-chains-in-automotive-industry</a></li>
+                    <li><a href="https://www.bmwgroup.com/en/general/data_privacy.html" target="_blank" class="text-sky-700 hover:underline">[22] https://www.bmwgroup.com/en/general/data_privacy.html</a></li>
+                    <li><a href="https://www.automotiveworld.com/news-releases/bmw-group-artificial-intelligence-as-a-quality-booster/" target="_blank" class="text-sky-700 hover:underline">[23] https://www.automotiveworld.com/news-releases/bmw-group-artificial-intelligence-as-a-quality-booster/</a></li>
+                    <li><a href="https://www.youtube.com/watch?v=36k_4KaDt5c" target="_blank" class="text-sky-700 hover:underline">[24] https://www.youtube.com/watch?v=36k_4KaDt5c</a></li>
+                    <li><a href="https://aws.amazon.com/solutions/case-studies/innovators/bmw/" target="_blank" class="text-sky-700 hover:underline">[25] https://www.aws.amazon.com/solutions/case-studies/innovators/bmw/</a></li>
+                    <li><a href="https://www.bmwusa.com/explore/connecteddrive.html" target="_blank" class="text-sky-700 hover:underline">[26] https://www.bmwusa.com/explore/connecteddrive.html</a></li>
+                    <li><a href="https://www.cleverence.com/articles/business-blogs/how-toyota-and-bmw-dealerships-use-predictive-analytics-to-manage-inventory/" target="_blank" class="text-sky-700 hover:underline">[27] https://www.cleverence.com/articles/business-blogs/how-toyota-and-bmw-dealerships-use-predictive-analytics-to-manage-inventory/</a></li>
+                    <li><a href="https://patentpc.com/blog/ai-and-bmw-patenting-the-future-of-cars" target="_blank" class="text-sky-700 hover:underline">[28] https://patentpc.com/blog/ai-and-bmw-patenting-the-future-of-cars</a></li>
+                    <li><a href="https://www.youtube.com/watch?v=ca57wdzaibU" target="_blank" class="text-sky-700 hover:underline">[29] https://www.youtube.com/watch?v=ca57wdzaibU</a></li>
+                    <li><a href="https://www.automotiveworld.com/news-releases/greater-efficiency-and-productivity-with-artificial-intelligence-generative-ai-in-bmw-group-purchasing/" target="_blank" class="text-sky-700 hover:underline">[30] https://www.automotiveworld.com/news-releases/greater-efficiency-and-productivity-with-artificial-intelligence-generative-ai-in-bmw-group-purchasing/</a></li>
+                    <li><a href="https://patentpc.com/blog/the-privacy-debate-around-bmws-connected-car-patents" target="_blank" class="text-sky-700 hover:underline">[31] https://patentpc.com/blog/the-privacy-debate-around-bmws-connected-car-patents</a></li>
+                    <li><a href="https://think-it.io/ai-product-development" target="_blank" class="text-sky-700 hover:underline">[32] https://think-it.io/ai-product-development</a></li>
+                    <li><a href="https://www.bmwgroup.com/en/report/2024/downloads/BMW-Group-Report-2024-en.pdf" target="_blank" class="text-sky-700 hover:underline">[33] https://www.bmwgroup.com/en/report/2024/downloads/BMW-Group-Report-2024-en.pdf</a></li>
+                    <li><a href="https://www.mercedes-benz-mobility.com/en/who-we-are/stories/creating-value-with-technology/" target="_blank" class="text-sky-700 hover:underline">[34] https://www.mercedes-benz-mobility.com/en/who-we-are/stories/creating-value-with-technology/</a></li>
+                    <li><a href="https://inmind.ai/case-study/palantir-bmw-group/" target="_blank" class="text-sky-700 hover:underline">[35] https://inmind.ai/case-study/palantir-bmw-group/</a></li>
+                    <li><a href="https://jobs.bmwgroup.com/job/Munich-Intern-Data-Science-%28fmx%29-BY-80809/1169460401/" target="_blank" class="text-sky-700 hover:underline">[36] https://jobs.bmwgroup.com/job/Munich-Intern-Data-Science-%28fmx%29-BY-80809/1169460401/</a></li>
+                    <li><a href="https://www.gisma.com/blog/from-audi-to-mercedes-how-ai-and-data-science-are-shaping-the-new-generation-of-cars" target="_blank" class="text-sky-700 hover:underline">[37] https://www.gisma.com/blog/from-audi-to-mercedes-how-ai-and-data-science-are-shaping-the-new-generation-of-cars</a></li>
                     <li>[38] [https://www.birminghambmw.com/blog/2025/march/7/bmw-vs-mercedes-benz-which-luxury-brand-is-right-for-your-alabama-drives.htm](https://www.birminghambmw.com/blog/2025/march/7/bmw-vs-mercedes-benz-which-luxury-brand-is-right-for-your-alabama-drives.htm)</li>
-                    <li>[39] [https://www.reddit.com/r/BMW/comments/1js56qi/audi_vs_their_main_rivals/](https://www.reddit.com/r/BMW/comments/1js56qi/audi_vs_their_main_rivals/)</li>
-                    <li>[40] [https://worldtrader24.de/top-audi-innovations-how-audi-ai-is-leading-the-automotive-revolution/](https://worldtrader24.de/top-audi-innovations-how-audi-ai-is-leading-the-automotive-revolution/)</li>
-                    <li>[41] [https://insideevs.com/features/749132/what-is-in-car-ai-for/](https://insideevs.com/features/749132/what-is-in-car-ai-for/)</li>
+                    <li>[39] [https://www.reddit.com/r/BMW/comments/1js56qi/audi_vs_their_main_rivals/](https://www.reddit.com/r/BMW/comments/1js56qi/audi_vs_their_main_rivals/ )</li>
+                    <li>[40] [https://worldtrader24.de/top-audi-innovations-how-audi-ai-is-leading-the-automotive-revolution/](https://worldtrader24.de/top-audi-innovations-how-audi-ai-is-leading-the-automotive-revolution/ )</li>
+                    <li>[41] [https://insideevs.com/features/749132/what-is-in-car-ai-for/](https://insideevs.com/features/749132/what-is-in-car-ai-for/ )</li>
                     <li>[42] [https://www.youtube.com/watch?v=7lX49ptyA4s](https://www.youtube.com/watch?v=7lX49ptyA4s)</li>
-                    <li>[43] [https://conciliac.com/what-does-tesla-do-with-the-data-it-collects-and-how-is-this-related-to-proper-data-management/](https://conciliac.com/what-does-tesla-do-with-the-data-it-collects-and-how-is-this-related-to-proper-data-management/)</li>
-                    <li>[44] [https://trginternational.com/blog/data-analytics-for-manufacturing-the-tesla-motors-case-study/](https://trginternational.com/blog/data-analytics-for-manufacturing-the-tesla-motors-case-study/)</li>
+                    <li>[43] [https://conciliac.com/what-does-tesla-do-with-the-data-it-collects-and-how-is-this-related-to-proper-data-management/](https://conciliac.com/what-does-tesla-do-with-the-data-it-collects-and-how-is-this-related-to-proper-data-management/ )</li>
+                    <li>[44] [https://trginternational.com/blog/data-analytics-for-manufacturing-the-tesla-motors-case-study/](https://trginternational.com/blog/data-analytics-for-manufacturing-the-tesla-motors-case-study/ )</li>
                     <li>[45] [https://www.trefis.com/data/companies/TSLA/no-login-required/UllJiioV/BMW-And-Tesla-A-Detailed-Comparison](https://www.trefis.com/data/companies/TSLA/no-login-required/UllJiioV/BMW-And-Tesla-A-Detailed-Comparison)</li>
                     <li>[46] [https://www.qlik.com/blog/data-is-making-manufacturing-more-resilient-efficient-and-sustainable-at-mercedes-benz](https://www.qlik.com/blog/data-is-making-manufacturing-more-resilient-efficient-and-sustainable-at-mercedes-benz)</li>
-                    <li>[47] [https://manufacturing-today.com/news/discover-audis-ambitious-roadmap-to-achieving-e-mobility/](https://manufacturing-today.com/news/discover-audis-ambitious-roadmap-to-achieving-e-mobility/)</li>
-                    <li>[48] [https://www.audi.com/en/innovation/future-technology/artificial-intelligence/](https://www.audi.com/en/innovation/future-technology/artificial-intelligence/)</li>
-                    <li>[49] [https://www.bmwblog.com/2019/12/13/bmw-shares-ai-algorithms-used-in-production-available-on-github/](https://www.bmwblog.com/2019/12/13/bmw-shares-ai-algorithms-used-in-production-available-on-github/)</li>
+                    <li>[47] [https://manufacturing-today.com/news/discover-audis-ambitious-roadmap-to-achieving-e-mobility/](https://manufacturing-today.com/news/discover-audis-ambitious-roadmap-to-achieving-e-mobility/ )</li>
+                    <li>[48] [https://www.audi.com/en/innovation/future-technology/artificial-intelligence/](https://www.audi.com/en/innovation/future-technology/artificial-intelligence/ )</li>
+                    <li>[49] [https://www.bmwblog.com/2019/12/13/bmw-shares-ai-algorithms-used-in-production-available-on-github/](https://www.bmwblog.com/2019/12/13/bmw-shares-ai-algorithms-used-in-production-available-on-github/ )</li>
                     <li>[50] [https://www.trendhunter.com/trends/bmw-ai](https://www.trendhunter.com/trends/bmw-ai)</li>
-                    <li>[51] [https://syncedreview.com/2019/04/15/biweekly-new-european-ethical-ai-guidelines-microsoft-bmw-partner-on-iot-manufacturing/](https://syncedreview.com/2019/04/15/biweekly-new-european-ethical-ai-guidelines-microsoft-bmw-partner-on-iot-manufacturing/)</li>
+                    <li>[51] [https://syncedreview.com/2019/04/15/biweekly-new-european-ethical-ai-guidelines-microsoft-bmw-partner-on-iot-manufacturing/](https://syncedreview.com/2019/04/15/biweekly-new-european-ethical-ai-guidelines-microsoft-bmw-partner-on-iot-manufacturing/ )</li>
                     <li>[52] [https://www.youtube.com/watch?v=z9WZ7i-zOz4&pp=0gcJCdgAo7VqN5tD](https://www.youtube.com/watch?v=z9WZ7i-zOz4&pp=0gcJCdgAo7VqN5tD)</li>
+                </ol>
+            </div>
+        </section>
+
+        <section id="source-appraisal" class="mb-12 scroll-mt-20">
+            <h2 class="section-title text-3xl font-bold mb-6 text-sky-700">Kritische Würdigung der Quellen</h2>
+            <p class="mb-6 text-lg">Dieser Abschnitt bietet eine kurze Einschätzung der Glaubwürdigkeit und der potenziellen Perspektive der verwendeten Quellen.</p>
+            <div class="card">
+                <ol class="list-decimal list-inside space-y-2 text-sm">
+                    <li><a href="https://autonews.gasgoo.com/new_energy/70036512.html" target="_blank" class="text-sky-700 hover:underline">[1]</a> **AutoNews Gasgoo:** Branchennachrichten aus China. Gut für aktuelle Meldungen und Partnerschaften im chinesischen Markt. Kann einen Fokus auf Unternehmensankündigungen haben.</li>
+                    <li><a href="https://aws.amazon.com/solutions/case-studies/bmw-group-case-study/" target="_blank" class="text-sky-700 hover:underline">[2]</a> **AWS Case Study:** Detaillierte Einblicke in die technische Implementierung und Vorteile der Cloud-Lösungen. Sehr zuverlässig für technische Details, aber als Marketingmaterial von AWS positiv formuliert.</li>
+                    <li><a href="https://aws.amazon.com/blogs/big-data/how-bmw-streamlined-data-access-using-aws-lake-formation-fine-grained-access-control/" target="_blank" class="text-sky-700 hover:underline">[3]</a> **AWS Blog:** Spezifische technische Details zu Datenarchitekturen. Glaubwürdig für technische Implementierungen, ebenfalls mit AWS-Perspektive.</li>
+                    <li><a href="https://www.microsoft.com/en/customers/story/18757-bmw-group-azure" target="_blank" class="text-sky-700 hover:underline">[4]</a> **Microsoft Customer Story:** Ähnlich wie AWS Case Study, detailliert über Azure-Implementierungen und Vorteile. Als Marketingmaterial positiv gefärbt.</li>
+                    <li><a href="https://www.youtube.com/watch?v=f246b185631/" target="_blank" class="text-sky-700 hover:underline">[5]</a> **Google User Content (YouTube Cache):** Wahrscheinlich Cache eines YouTube-Videos, das Originalquelle könnte eine BMW-Präsentation oder ein Interview sein. Glaubwürdigkeit hängt von der primären Quelle ab.</li>
+                    <li><a href="https://www.microsoft.com/en/customers/story/19769-bmw-ag-azure-app-service" target="_blank" class="text-sky-700 hover:underline">[6]</a> **Microsoft Customer Story:** Detailliert über Azure-App-Service und MDR-System. Glaubwürdig für technische Implementierungen, mit Microsoft-Perspektive.</li>
+                    <li><a href="https://technologymagazine.com/articles/bmw-microsoft-turbocharging-vehicle-development-with-ai" target="_blank" class="text-sky-700 hover:underline">[7]</a> **Technology Magazine:** Branchenmagazin, fasst oft Unternehmensmeldungen und technische Entwicklungen zusammen. Allgemein gute Quelle für Trends und Zusammenfassungen.</li>
+                    <li><a href="https://www.bmwgroup.com/en/innovation/connected-car/cardata.html" target="_blank" class="text-sky-700 hover:underline">[8]</a> **BMW Group (offiziell):** Primärquelle für Informationen zu CarData, Datenschutzrichtlinien und Innovationen. Sehr glaubwürdig für offizielle Positionen, aber tendenziell selbst-positiv darstellend.</li>
+                    <li><a href="https://disruptionhub.com/how-does-bmw-use-ai/" target="_blank" class="text-sky-700 hover:underline">[9]</a> **Disruption Hub:** Blog oder Plattform mit Fokus auf technologische Disruption. Bietet oft Zusammenfassungen und Analysen, kann aber weniger tiefgehend sein als Fachartikel.</li>
+                    <li><a href="https://www.virtasant.com/ai-today/ai-in-product-development-netflix-bmw/" target="_blank" class="text-sky-700 hover:underline">[10]</a> **Virtasant Blog:** Technologie-Beratungsunternehmen. Bietet Einblicke in Anwendungsfälle, oft basierend auf öffentlichen Informationen.</li>
+                    <li><a href="https://aws.amazon.com/blogs/big-data/how-bmw-group-built-a-serverless-terabyte-scale-data-transformation-architecture-with-dbt-and-amazon-athena/" target="_blank" class="text-sky-700 hover:underline">[11]</a> **AWS Blog:** Spezifische technische Details zur Datenarchitektur und Transformation. Hohe Glaubwürdigkeit für technische Aspekte.</li>
+                    <li><a href="https://aws.amazon.com/blogs/machine-learning/innovating-at-speed-bmws-generative-ai-solution-for-cloud-incident-analysis/" target="_blank" class="text-sky-700 hover:underline">[12] **AWS Blog:**</a> Details zur Generative AI-Implementierung. Glaubwürdig für spezifische Anwendungsfälle, mit AWS-Fokus.</li>
+                    <li><a href="https://faq.bmwusa.com/s/article/BMW-iDrive-OS7-Personalization-Data-protection-htGtM?language=en_US" target="_blank" class="text-sky-700 hover:underline">[13] **BMW USA FAQ:**</a> Offizielle Informationen zum Datenschutz im Fahrzeug. Sehr glaubwürdig für Kundensicht und offizielle Erklärungen.</li>
+                    <li><a href="https://www.sprintzeal.com/blog/bmw-marketing-strategy" target="_blank" class="text-sky-700 hover:underline">[14] **Sprintzeal Blog:**</a> Bildungs- und Trainingsplattform. Bietet oft Überblicksartikel zu Geschäftsstrategien.</li>
+                    <li><a href="https://www.bmwgroup.com/scm-driver/en/get-to-know-scm/data-for-parametrisation.html" target="_blank" class="text-sky-700 hover:underline">[15] **BMW Group (offiziell):**</a> Technische Einblicke in Datenerfassung für Fahrermodelle. Hohe Glaubwürdigkeit für unternehmenseigene Forschung.</li>
+                    <li><a href="https://www.nvidia.com/en-us/case-studies/bmw-optimizes-production-with-ai-and-dgx-systems/" target="_blank" class="text-sky-700 hover:underline">[16] **NVIDIA Case Study:**</a> Detaillierte Implementierung von KI in der Produktion mit NVIDIA-Hardware. Sehr zuverlässig für die Rolle von NVIDIA-Technologien, mit positiver Darstellung.</li>
+                    <li><a href="https://www.youtube.com/watch?v=WeNlAbIDgp4" target="_blank" class="text-sky-700 hover:underline">[17] **Google User Content (YouTube Cache):**</a> Ähnlich wie [5], Glaubwürdigkeit hängt von der Originalquelle ab.</li>
+                    <li><a href="https://www.cleverence.com/articles/business-blogs/how-tesla-and-bmw-use-ai-driven-predictive-maintenance-to-reduce-downtime/" target="_blank" class="text-sky-700 hover:underline">[18] **Cleverence Blog:**</a> Blog eines Softwareanbieters, der Business-Themen behandelt. Bietet oft generelle Einblicke und Vergleiche, kann aber oberflächlich sein.</li>
+                    <li><a href="https://grjenkin.com/articles/category/big-data/6689694/03/12/2024/how-bmw-uses-artificial-intelligence-and-big-data-to-design-and-build-cars-of-tomorrow-7wdata/" target="_blank" class="text-sky-700 hover:underline">[19] **GRJenkin.com Blog:**</a> Persönlicher/Fachblog, der Technologie-Themen zusammenfasst. Kann nützliche Übersichten bieten, aber keine offizielle Quelle.</li>
+                    <li><a href="https://www.youtube.com/watch?v=GvlEstLPp9s" target="_blank" class="text-sky-700 hover:underline">[20] **Google User Content (YouTube Cache):**</a> Ähnlich wie [5] und [17].</li>
+                    <li><a href="https://www.xenonstack.com/blog/supply-chains-in-automotive-industry" target="_blank" class="text-sky-700 hover:underline">[21] **XenonStack Blog:**</a> Technologie-Blog eines Beratungsunternehmens. Bietet oft Zusammenfassungen von Branchenentwicklungen.</li>
+                    <li><a href="https://www.bmwgroup.com/en/general/data_privacy.html" target="_blank" class="text-sky-700 hover:underline">[22] **BMW Group (offiziell):**</a> Offizielle Datenschutzseite. Sehr glaubwürdig für BMWs Datenschutzprinzipien.</li>
+                    <li><a href="https://www.automotiveworld.com/news-releases/bmw-group-artificial-intelligence-as-a-quality-booster/" target="_blank" class="text-sky-700 hover:underline">[23] **Automotive World:**</a> Branchennachrichten und Pressemitteilungen. Gut für Unternehmensankündigungen und neue Technologien.</li>
+                    <li><a href="https://www.youtube.com/watch?v=36k_4KaDt5c" target="_blank" class="text-sky-700 hover:underline">[24] **Google User Content (YouTube Cache):**</a> Ähnlich wie andere Googleusercontent-Links.</li>
+                    <li><a href="https://aws.amazon.com/solutions/case-studies/innovators/bmw/" target="_blank" class="text-sky-700 hover:underline">[25] **AWS Innovators Case Study:**</a> Ähnlich wie [2], detailliert über die Zusammenarbeit mit AWS.</li>
+                    <li><a href="https://www.bmwusa.com/explore/connecteddrive.html" target="_blank" class="text-sky-700 hover:underline">[26] **BMW USA (offiziell):**</a> Offizielle Informationen zu ConnectedDrive-Diensten. Glaubwürdig für Produktmerkmale.</li>
+                    <li><a href="https://www.cleverence.com/articles/business-blogs/how-toyota-and-bmw-dealerships-use-predictive-analytics-to-manage-inventory/" target="_blank" class="text-sky-700 hover:underline">[27] **Cleverence Blog:**</a> Ähnlich wie [18]. Bietet Einblicke in branchenweite Anwendungsfälle.</li>
+                    <li><a href="https://patentpc.com/blog/ai-and-bmw-patenting-the-future-of-cars" target="_blank" class="text-sky-700 hover:underline">[28] **PatentPC Blog:**</a> Blog, der sich mit Patenten und deren Implikationen befasst. Bietet eine spezifische Perspektive auf rechtliche und technologische Entwicklungen.</li>
+                    <li>[29] [https://www.youtube.com/watch?v=ca57wdzaibU](https://www.youtube.com/watch?v=ca57wdzaibU): Ähnlich wie andere Googleusercontent-Links.</li>
+                    <li><a href="https://www.automotiveworld.com/news-releases/greater-efficiency-and-productivity-with-artificial-intelligence-generative-ai-in-bmw-group-purchasing/" target="_blank" class="text-sky-700 hover:underline">[30] **Automotive World:**</a> Pressemitteilung/Nachricht zu Generative AI im Einkauf. Gut für offizielle Unternehmensmeldungen.</li>
+                    <li><a href="https://patentpc.com/blog/the-privacy-debate-around-bmws-connected-car-patents" target="_blank" class="text-sky-700 hover:underline">[31] **PatentPC Blog:**</a> Detaillierte Analyse zu Datenschutz und Connected Car Patenten. Nützlich für spezifische rechtliche/technologische Betrachtungen.</li>
+                    <li><a href="https://think-it.io/ai-product-development" target="_blank" class="text-sky-700 hover:underline">[32] **Think-IT Blog:**</a> Blog eines Softwareentwicklungsunternehmens. Bietet Einblicke in ihre Herangehensweise an KI-Entwicklung und -Qualität.</li>
+                    <li><a href="https://www.bmwgroup.com/en/report/2024/downloads/BMW-Group-Report-2024-en.pdf" target="_blank" class="text-sky-700 hover:underline">[33] **BMW Group Report 2024 (offiziell):**</a> Offizieller Jahresbericht. Sehr glaubwürdig für Unternehmensstrategie, Ziele und Hochglanz-Darstellung.</li>
+                    <li><a href="https://www.mercedes-benz-mobility.com/en/who-we-are/stories/creating-value-with-technology/" target="_blank" class="text-sky-700 hover:underline">[34] **Mercedes-Benz Mobility:**</a> Unternehmensblog/Stories-Sektion. Gut für Einblicke in Mercedes' Technologieansatz.</li>
+                    <li><a href="https://inmind.ai/case-study/palantir-bmw-group/" target="_blank" class="text-sky-700 hover:underline">[35] **Inmind.ai Case Study:**</a> Fallstudie eines KI-Beratungsunternehmens über ihre Zusammenarbeit mit BMW. Fokussiert auf die Vorteile der Partnertechnologie.</li>
+                    <li><a href="https://jobs.bmwgroup.com/job/Munich-Intern-Data-Science-%28fmx%29-BY-80809/1169460401/" target="_blank" class="text-sky-700 hover:underline">[36] **BMW Group Job Portal:**</a> Stellenbeschreibung für eine interne Rolle. Indiziert den Einsatz von Technologien innerhalb des Unternehmens.</li>
+                    <li><a href="https://www.gisma.com/blog/from-audi-to-mercedes-how-ai-and-data-science-are-shaping-the-new-generation-of-cars" target="_blank" class="text-sky-700 hover:underline">[37] **GISMA Business School Blog:**</a> Bildungsblog. Bietet oft breitere Perspektiven und Vergleiche zwischen Unternehmen.</li>
+                    <li>[38] [https://www.birminghambmw.com/blog/2025/march/7/bmw-vs-mercedes-benz-which-luxury-brand-is-right-for-your-alabama-drives.htm](https://www.birminghambmw.com/blog/2025/march/7/bmw-vs-mercedes-benz-which-luxury-brand-is-right-for-your-alabama-drives.htm): Händler-Blog. Marketingorientiert, Meinungen können subjektiv sein.</li>
+                    <li>[39] [https://www.reddit.com/r/BMW/comments/1js56qi/audi_vs_their_main_rivals/](https://www.reddit.com/r/BMW/comments/1js56qi/audi_vs_their_main_rivals/): Öffentliches Forum (Reddit). Subjektive Meinungen von Nutzern, sehr geringe faktische Glaubwürdigkeit, dient eher zur Stimmungserfassung.</li>
+                    <li>[40] [https://worldtrader24.de/top-audi-innovations-how-audi-ai-is-leading-the-automotive-revolution/](https://worldtrader24.de/top-audi-innovations-how-audi-ai-is-leading-the-automotive-revolution/): Nachrichten- und Blogseite. Oft Zusammenfassungen von Unternehmensmeldungen.</li>
+                    <li>[41] [https://insideevs.com/features/749132/what-is-in-car-ai-for/](https://insideevs.com/features/749132/what-is-in-car-ai-for/): Fachblog für Elektrofahrzeuge. Bietet spezifische Einblicke, kann eine bestimmte Perspektive haben.</li>
+                    <li>[42] [https://www.youtube.com/watch?v=7lX49ptyA4s](https://www.youtube.com/watch?v=7lX49ptyA4s): Ähnlich wie andere Googleusercontent-Links.</li>
+                    <li>[43] [https://conciliac.com/what-does-tesla-do-with-the-data-it-collects-and-how-is-this-related-to-proper-data-management/](https://conciliac.com/what-does-tesla-do-with-the-data-it-collects-and-how-is-this-related-to-proper-data-management/): Beratungsblog. Erklärt Konzepte und Anwendungsfälle.</li>
+                    <li>[44] [https://trginternational.com/blog/data-analytics-for-manufacturing-the-tesla-motors-case-study/](https://trginternational.com/blog/data-analytics-for-manufacturing-the-tesla-motors-case-study/): Beratungsblog/Case Study. Fokussiert auf Analysen von Unternehmen.</li>
+                    <li>[45] [https://www.trefis.com/data/companies/TSLA/no-login-required/UllJiioV/BMW-And-Tesla-A-Detailed-Comparison](https://www.trefis.com/data/companies/TSLA/no-login-required/UllJiioV/BMW-And-Tesla-A-Detailed-Comparison): Finanzanalyse-Plattform. Gut für vergleichende Finanzdaten und Geschäftsmodelle, aber eher auf Metriken fokussiert.</li>
+                    <li>[46] [https://www.qlik.com/blog/data-is-making-manufacturing-more-resilient-efficient-and-sustainable-at-mercedes-benz](https://www.qlik.com/blog/data-is-making-manufacturing-more-resilient-efficient-and-sustainable-at-mercedes-benz): Hersteller von Business-Intelligence-Software. Case Study/Blog, zeigt Vorteile der eigenen Software.</li>
+                    <li>[47] [https://manufacturing-today.com/news/discover-audis-ambitious-roadmap-to-achieving-e-mobility/](https://manufacturing-today.com/news/discover-audis-ambitious-roadmap-to-achieving-e-mobility/): Branchenmagazin. Überblicksartikel zu Herstellerstrategien.</li>
+                    <li>[48] [https://www.audi.com/en/innovation/future-technology/artificial-intelligence/](https://www.audi.com/en/innovation/future-technology/artificial-intelligence/): Offizielle Audi-Seite. Primärquelle für Audis KI-Strategie, aber mit Eigenmarketing-Fokus.</li>
+                    <li>[49] [https://www.bmwblog.com/2019/12/13/bmw-shares-ai-algorithms-used-in-production-available-on-github/](https://www.bmwblog.com/2019/12/13/bmw-shares-ai-algorithms-used-in-production-available-on-github/): BMW-spezifischer Blog. Kann offizielle Pressemitteilungen weitergeben oder kommentieren.</li>
+                    <li>[50] [https://www.trendhunter.com/trends/bmw-ai](https://www.trendhunter.com/trends/bmw-ai): Trend- und Innovationsplattform. Bietet oft Zusammenfassungen und Überblicke über Entwicklungen.</li>
+                    <li>[51] [https://syncedreview.com/2019/04/15/biweekly-new-european-ethical-ai-guidelines-microsoft-bmw-partner-on-iot-manufacturing/](https://syncedreview.com/2019/04/15/biweekly-new-european-ethical-ai-guidelines-microsoft-bmw-partner-on-iot-manufacturing/): Technologie-Review-Seite. Kann Zusammenfassungen und Analysen von Branchenthemen bieten.</li>
+                    <li>[52] [https://www.youtube.com/watch?v=z9WZ7i-zOz4&pp=0gcJCdgAo7VqN5tD](https://www.youtube.com/watch?v=z9WZ7i-zOz4&pp=0gcJCdgAo7VqN5tD): Ähnlich wie andere Googleusercontent-Links.</li>
                 </ol>
             </div>
         </section>
@@ -456,6 +526,62 @@
     </footer>
 
     <script>
+        // Data for footnotes mapping
+        const sourcesData = {
+            1: "https://autonews.gasgoo.com/new_energy/70036512.html",
+            2: "https://aws.amazon.com/solutions/case-studies/bmw-group-case-study/",
+            3: "https://aws.amazon.com/blogs/big-data/how-bmw-streamlined-data-access-using-aws-lake-formation-fine-grained-access-control/",
+            4: "https://www.microsoft.com/en/customers/story/18757-bmw-group-azure",
+            5: "https://www.youtube.com/watch?v=f246b185631/",
+            6: "https://www.microsoft.com/en/customers/story/19769-bmw-ag-azure-app-service",
+            7: "https://technologymagazine.com/articles/bmw-microsoft-turbocharging-vehicle-development-with-ai",
+            8: "https://www.bmwgroup.com/en/innovation/connected-car/cardata.html",
+            9: "https://disruptionhub.com/how-does-bmw-use-ai/",
+            10: "https://www.virtasant.com/ai-today/ai-in-product-development-netflix-bmw/",
+            11: "https://aws.amazon.com/blogs/big-data/how-bmw-group-built-a-serverless-terabyte-scale-data-transformation-architecture-with-dbt-and-amazon-athena/",
+            12: "https://aws.amazon.com/blogs/machine-learning/innovating-at-speed-bmws-generative-ai-solution-for-cloud-incident-analysis/",
+            13: "https://faq.bmwusa.com/s/article/BMW-iDrive-OS7-Personalization-Data-protection-htGtM?language=en_US",
+            14: "https://www.sprintzeal.com/blog/bmw-marketing-strategy",
+            15: "https://www.bmwgroup.com/scm-driver/en/get-to-know-scm/data-for-parametrisation.html",
+            16: "https://www.nvidia.com/en-us/case-studies/bmw-optimizes-production-with-ai-and-dgx-systems/",
+            17: "https://www.youtube.com/watch?v=WeNlAbIDgp4",
+            18: "https://www.cleverence.com/articles/business-blogs/how-tesla-and-bmw-use-ai-driven-predictive-maintenance-to-reduce-downtime/",
+            19: "https://grjenkin.com/articles/category/big-data/6689694/03/12/2024/how-bmw-uses-artificial-intelligence-and-big-data-to-design-and-build-cars-of-tomorrow-7wdata/",
+            20: "https://www.youtube.com/watch?v=GvlEstLPp9s",
+            21: "https://www.xenonstack.com/blog/supply-chains-in-automotive-industry",
+            22: "https://www.bmwgroup.com/en/general/data_privacy.html",
+            23: "https://www.automotiveworld.com/news-releases/bmw-group-artificial-intelligence-as-a-quality-booster/",
+            24: "https://www.youtube.com/watch?v=36k_4KaDt5c",
+            25: "https://aws.amazon.com/solutions/case-studies/innovators/bmw/",
+            26: "https://www.bmwusa.com/explore/connecteddrive.html",
+            27: "https://www.cleverence.com/articles/business-blogs/how-toyota-and-bmw-dealerships-use-predictive-analytics-to-manage-inventory/",
+            28: "https://patentpc.com/blog/ai-and-bmw-patenting-the-future-of-cars",
+            29: "https://www.youtube.com/watch?v=ca57wdzaibU",
+            30: "https://www.automotiveworld.com/news-releases/greater-efficiency-and-productivity-with-artificial-intelligence-generative-ai-in-bmw-group-purchasing/",
+            31: "https://patentpc.com/blog/the-privacy-debate-around-bmws-connected-car-patents",
+            32: "https://think-it.io/ai-product-development",
+            33: "https://www.bmwgroup.com/en/report/2024/downloads/BMW-Group-Report-2024-en.pdf",
+            34: "https://www.mercedes-benz-mobility.com/en/who-we-are/stories/creating-value-with-technology/",
+            35: "https://inmind.ai/case-study/palantir-bmw-group/",
+            36: "https://jobs.bmwgroup.com/job/Munich-Intern-Data-Science-%28fmx%29-BY-80809/1169460401/",
+            37: "https://www.gisma.com/blog/from-audi-to-mercedes-how-ai-and-data-science-are-shaping-the-new-generation-of-cars",
+            38: "https://www.birminghambmw.com/blog/2025/march/7/bmw-vs-mercedes-benz-which-luxury-brand-is-right-for-your-alabama-drives.htm",
+            39: "https://www.reddit.com/r/BMW/comments/1js56qi/audi_vs_their_main_rivals/",
+            40: "https://worldtrader24.de/top-audi-innovations-how-audi-ai-is-leading-the-automotive-revolution/",
+            41: "https://insideevs.com/features/749132/what-is-in-car-ai-for/",
+            42: "https://www.youtube.com/watch?v=7lX49ptyA4s",
+            43: "https://conciliac.com/what-does-tesla-do-with-the-data-it-collects-and-how-is-this-related-to-proper-data-management/",
+            44: "https://trginternational.com/blog/data-analytics-for-manufacturing-the-tesla-motors-case-study/",
+            45: "https://www.trefis.com/data/companies/TSLA/no-login-required/UllJiioV/BMW-And-Tesla-A-Detailed-Comparison",
+            46: "https://www.qlik.com/blog/data-is-making-manufacturing-more-resilient-efficient-and-sustainable-at-mercedes-benz",
+            47: "https://manufacturing-today.com/news/discover-audis-ambitious-roadmap-to-achieving-e-mobility/",
+            48: "https://www.audi.com/en/innovation/future-technology/artificial-intelligence/",
+            49: "https://www.bmwblog.com/2019/12/13/bmw-shares-ai-algorithms-used-in-production-available-on-github/",
+            50: "https://www.trendhunter.com/trends/bmw-ai",
+            51: "https://syncedreview.com/2019/04/15/biweekly-new-european-ethical-ai-guidelines-microsoft-bmw-partner-on-iot-manufacturing/",
+            52: "https://www.youtube.com/watch?v=z9WZ7i-zOz4&pp=0gcJCdgAo7VqN5tD"
+        };
+
         document.addEventListener('DOMContentLoaded', function () {
             // Mobile menu toggle
             const menuButton = document.getElementById('mobile-menu-button');
@@ -491,7 +617,7 @@
                     const isOpening = content.style.maxHeight === '0px' || !content.style.maxHeight;
                     
                     document.querySelectorAll('.accordion-content').forEach(el => {
-                        if (el !== content) { // Close other accordions
+                        if (el !== content) { 
                            // el.style.maxHeight = '0px';
                            // el.previousElementSibling.querySelector('span').textContent = '▼';
                         }
@@ -516,12 +642,12 @@
                         labels: ['CDH Gesamt (PB)', 'CDH Tägl. Fzg. (TB)', 'Apps Tägl. (TB)', 'Plattform Aut. Fahren (PB)'],
                         datasets: [{
                             label: 'Datenmenge',
-                            data: [10, 10, 3.2, 200], // Assuming 200PB for autonomous driving platform as "several hundred"
+                            data: [10, 10, 3.2, 200], 
                             backgroundColor: [
-                                'rgba(59, 130, 246, 0.7)', // blue-500
-                                'rgba(34, 197, 94, 0.7)',  // green-500
-                                'rgba(239, 68, 68, 0.7)',   // red-500
-                                'rgba(249, 115, 22, 0.7)'  // orange-500
+                                'rgba(59, 130, 246, 0.7)', 
+                                'rgba(34, 197, 94, 0.7)',  
+                                'rgba(239, 68, 68, 0.7)',   
+                                'rgba(249, 115, 22, 0.7)'  
                             ],
                             borderColor: [
                                 'rgba(59, 130, 246, 1)',
@@ -560,16 +686,16 @@
 
             // Applications Data & Filtering
             const applicationsData = [
-                { category: 'marketing', title: 'Personalisierte Kundenerlebnisse', text: 'KI lernt Fahrerpräferenzen (Sitze, Klima, Musik) und passt das Marketing an die Kundenidentität an, um Loyalität zu fördern. [14, 28, 31]', icon: '🎯' },
-                { category: 'produktentwicklung', title: 'KI-gesteuerte Entwicklung', text: 'KI verbessert Komfort und Sicherheit, beschleunigt Formulierungsprozesse durch Simulation und unterstützt Designprozesse mit bildgenerierender KI. [9, 10, 33]', icon: '🛠️' },
-                { category: 'produktentwicklung', title: 'CarData Plattform', text: 'Kunden teilen (mit Zustimmung) Fahrzeugdaten für personalisierte Dienste von Drittanbietern (z.B. Versicherungen). [8, 24]', icon: '🤝' },
-                { category: 'produktentwicklung', title: 'Intelligent Personal Assistant', text: 'Sprachgesteuerter Assistent, der Präferenzen lernt und durch KI (Alibaba, Banma) intelligenter wird. [1, 26]', icon: '🗣️' },
-                { category: 'kundenservice', title: 'Automatisierte Incident-Analyse', text: 'Generative KI (Amazon Bedrock Agents) beschleunigt die Ursachenanalyse bei Cloud-Vorfällen erheblich. [12]', icon: '🔍' },
-                { category: 'produktion', title: 'KI-Qualitätskontrolle', text: 'Präzise Bolzenplatzierung (spart >1 Mio. USD/Jahr), Identifizierung von Produktionsproblemen mit Kameras, GenAI4Q für maßgeschneiderte Inspektionen. [9, 10, 23]', icon: '🏭' },
-                { category: 'produktion', title: 'Synthetische Daten (SORDI)', text: 'NVIDIA DGX generiert fotorealistische Bilder für KI-Training in der Produktion, beschleunigt QA-Aufgaben. [16, 17]', icon: '🖼️' },
-                { category: 'lieferkette', title: 'Risikomanagement & Resilienz', text: 'KI verfolgt Lieferantenrisiken, Supply Chain Control Tower überwacht Ereignisse, Palantir Foundry optimiert Logistik. [21, 35]', icon: '🔗' },
-                { category: 'mobilitaet', title: 'Prädiktive Wartung', text: 'KI kombiniert IoT-Sensoren und Echtzeitdaten zur Vorhersage des Wartungsbedarfs kritischer Komponenten. [18]', icon: '🔩' },
-                { category: 'mobilitaet', title: 'Autonomes Fahren', text: 'KI ist entscheidend für die Echtzeitanalyse von Kamera- & Sensordaten, Ziel: Level 5 Autonomie. [5, 19]', icon: '🚗' }
+                { category: 'marketing', title: 'Personalisierte Kundenerlebnisse', text: 'KI lernt Fahrerpräferenzen (Sitze, Klima, Musik) und passt das Marketing an die Kundenidentität an, um Loyalität zu fördern. <span class="footnote-ref">14</span>, <span class="footnote-ref">28</span>, <span class="footnote-ref">31</span>', icon: '🎯' },
+                { category: 'produktentwicklung', title: 'KI-gesteuerte Entwicklung', text: 'KI verbessert Komfort und Sicherheit, beschleunigt Formulierungsprozesse durch Simulation und unterstützt Designprozesse mit bildgenerierender KI. <span class="footnote-ref">9</span>, <span class="footnote-ref">10</span>, <span class="footnote-ref">33</span>', icon: '🛠️' },
+                { category: 'produktentwicklung', title: 'CarData Plattform', text: 'Kunden teilen (mit Zustimmung) Fahrzeugdaten für personalisierte Dienste von Drittanbietern (z.B. Versicherungen). <span class="footnote-ref">8</span>, <span class="footnote-ref">24</span>', icon: '🤝' },
+                { category: 'produktentwicklung', title: 'Intelligent Personal Assistant', text: 'Sprachgesteuerter Assistent, der Präferenzen lernt und durch KI (Alibaba, Banma) intelligenter wird. <span class="footnote-ref">1</span>, <span class="footnote-ref">26</span>', icon: '🗣️' },
+                { category: 'kundenservice', title: 'Automatisierte Incident-Analyse', text: 'Generative KI (Amazon Bedrock Agents) beschleunigt die Ursachenanalyse bei Cloud-Vorfällen erheblich. <span class="footnote-ref">12</span>', icon: '🔍' },
+                { category: 'produktion', title: 'KI-Qualitätskontrolle', text: 'Präzise Bolzenplatzierung (spart >1 Mio. USD/Jahr), Identifizierung von Produktionsproblemen mit Kameras, GenAI4Q für maßgeschneiderte Inspektionen. <span class="footnote-ref">9</span>, <span class="footnote-ref">10</span>, <span class="footnote-ref">23</span>', icon: '🏭' },
+                { category: 'produktion', title: 'Synthetische Daten (SORDI)', text: 'NVIDIA DGX generiert fotorealistische Bilder für KI-Training in der Produktion, beschleunigt QA-Aufgaben. <span class="footnote-ref">16</span>, <span class="footnote-ref">17</span>', icon: '🖼️' },
+                { category: 'lieferkette', title: 'Risikomanagement & Resilienz', text: 'KI verfolgt Lieferantenrisiken, Supply Chain Control Tower überwacht Ereignisse, Palantir Foundry optimiert Logistik. <span class="footnote-ref">21</span>, <span class="footnote-ref">35</span>', icon: '🔗' },
+                { category: 'mobilitaet', title: 'Prädiktive Wartung', text: 'KI kombiniert IoT-Sensoren und Echtzeitdaten zur Vorhersage des Wartungsbedarfs kritischer Komponenten. <span class="footnote-ref">18</span>', icon: '🔩' },
+                { category: 'mobilitaet', title: 'Autonomes Fahren', text: 'KI ist entscheidend für die Echtzeitanalyse von Kamera- & Sensordaten, Ziel: Level 5 Autonomie. <span class="footnote-ref">5</span>, <span class="footnote-ref">19</span>', icon: '🚗' }
             ];
 
             const applicationsGrid = document.getElementById('applicationsGrid');
@@ -610,6 +736,21 @@
                 displayApplications(); // Initial display
             }
 
+            // Function to make footnote references clickable
+            function makeFootnoteRefsClickable() {
+                document.querySelectorAll('.footnote-ref').forEach(span => {
+                    const refNumber = parseInt(span.textContent);
+                    if (sourcesData[refNumber]) {
+                        const a = document.createElement('a');
+                        a.href = sourcesData[refNumber];
+                        a.target = "_blank";
+                        a.className = "footnote-link"; // Apply styling for clickable links
+                        a.textContent = refNumber; // Display just the number
+                        span.replaceWith(a);
+                    }
+                });
+            }
+            makeFootnoteRefsClickable(); // Call on initial load
 
             // Set current year in footer
             const currentYearElement = document.getElementById('currentYear');
