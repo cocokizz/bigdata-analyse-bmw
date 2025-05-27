@@ -1,0 +1,653 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>BMW: Big Data & KI Strategie - Interaktive Analyse</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <style>
+        body { font-family: 'Inter', sans-serif; }
+        .chart-container { position: relative; width: 100%; max-width: 600px; margin-left: auto; margin-right: auto; height: 300px; max-height: 400px; }
+        @media (min-width: 768px) { .chart-container { height: 350px; } }
+        .nav-link { transition: color 0.3s ease; }
+        .nav-link:hover, .nav-link.active { color: #0284c7; /* sky-600 */ }
+        .section-title { border-bottom: 2px solid #0ea5e9; /* sky-500 */ padding-bottom: 0.5rem; }
+        .card { background-color: white; border-radius: 0.5rem; box-shadow: 0 4px 6px -1px rgba(0,0,0,0.1), 0 2px 4px -1px rgba(0,0,0,0.06); padding: 1.5rem; transition: transform 0.3s ease; }
+        .card:hover { transform: translateY(-5px); }
+        .accordion-content { max-height: 0; overflow: hidden; transition: max-height 0.5s ease-out; }
+        .tab-button.active { background-color: #0369a1; /* sky-700 */ color: white; }
+        .tab-button { background-color: #e0f2fe; /* sky-100 */ color: #0c4a6e; /* sky-800 */ }
+        /* Added rules to prevent text overflow within cards */
+        .card p, .card ul, .card li, .card h3 { /* Apply wrapping to paragraphs, lists, and headings */
+            word-break: break-word; /* Ensures long words break to fit */
+            overflow-wrap: break-word; /* Ensures long words break to fit */
+            min-width: 0; /* Important for flex/grid items to allow content to shrink */
+        }
+        /* Ensure the flex container within the card allows its children to wrap */
+        .card .flex-wrap-container { /* New class for the flex container holding icon and title */
+            flex-wrap: wrap; /* Allows items to wrap to the next line */
+            min-width: 0; /* Ensures the container itself can shrink */
+        }
+        /* Ensure the flex-grow item (main text) can shrink */
+        .card .flex-grow {
+            min-width: 0; /* Allow the flex-grow item to shrink */
+        }
+    </style>
+</head>
+<body class="bg-slate-50 text-slate-800">
+
+    <header class="bg-white shadow-md sticky top-0 z-50">
+        <nav class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex items-center justify-between h-16">
+                <div class="flex items-center">
+                    <span class="font-bold text-xl text-sky-700">BMW</span>
+                    <span class="font-semibold text-xl text-slate-700 ml-2">Big Data & KI Analyse</span>
+                </div>
+                <div class="hidden md:block">
+                    <div class="ml-10 flex items-baseline space-x-4">
+                        <a href="#overview" class="nav-link px-3 py-2 rounded-md text-sm font-medium text-slate-700 hover:text-sky-600">Überblick</a>
+                        <a href="#four-vs" class="nav-link px-3 py-2 rounded-md text-sm font-medium text-slate-700 hover:text-sky-600">Big Data @ BMW</a>
+                        <a href="#ecosystem" class="nav-link px-3 py-2 rounded-md text-sm font-medium text-slate-700 hover:text-sky-600">Daten-Ökosystem</a>
+                        <a href="#applications" class="nav-link px-3 py-2 rounded-md text-sm font-medium text-slate-700 hover:text-sky-600">Anwendungen</a>
+                        <a href="#competition" class="nav-link px-3 py-2 rounded-md text-sm font-medium text-slate-700 hover:text-sky-600">Wettbewerb</a>
+                        <a href="#ethics" class="nav-link px-3 py-2 rounded-md text-sm font-medium text-slate-700 hover:text-sky-600">Ethik & Zukunft</a>
+                        <a href="#sources" class="nav-link px-3 py-2 rounded-md text-sm font-medium text-slate-700 hover:text-sky-600">Quellen</a>
+                    </div>
+                </div>
+                <div class="md:hidden">
+                    <button id="mobile-menu-button" class="inline-flex items-center justify-center p-2 rounded-md text-slate-400 hover:text-sky-600 hover:bg-slate-100 focus:outline-none focus:ring-2 focus:ring-inset focus:ring-sky-500">
+                        <span class="sr-only">Menü öffnen</span>
+                        <svg class="block h-6 w-6" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" aria-hidden="true">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16" />
+                        </svg>
+                        <svg class="hidden h-6 w-6" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" aria-hidden="true">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" />
+                        </svg>
+                    </button>
+                </div>
+            </div>
+        </nav>
+        <div id="mobile-menu" class="md:hidden hidden">
+            <div class="px-2 pt-2 pb-3 space-y-1 sm:px-3">
+                <a href="#overview" class="nav-link block px-3 py-2 rounded-md text-base font-medium text-slate-700 hover:text-sky-600 hover:bg-slate-50">Überblick</a>
+                <a href="#four-vs" class="nav-link block px-3 py-2 rounded-md text-base font-medium text-slate-700 hover:text-sky-600 hover:bg-slate-50">Big Data @ BMW</a>
+                <a href="#ecosystem" class="nav-link block px-3 py-2 rounded-md text-base font-medium text-slate-700 hover:text-sky-600 hover:bg-slate-50">Daten-Ökosystem</a>
+                <a href="#applications" class="nav-link block px-3 py-2 rounded-md text-base font-medium text-slate-700 hover:text-sky-600 hover:bg-slate-50">Anwendungen</a>
+                <a href="#competition" class="nav-link block px-3 py-2 rounded-md text-base font-medium text-slate-700 hover:text-sky-600 hover:bg-slate-50">Wettbewerb</a>
+                <a href="#ethics" class="nav-link block px-3 py-2 rounded-md text-base font-medium text-slate-700 hover:text-sky-600 hover:bg-slate-50">Ethik & Zukunft</a>
+                <a href="#sources" class="nav-link block px-3 py-2 rounded-md text-base font-medium text-slate-700 hover:text-sky-600 hover:bg-slate-50">Quellen</a>
+            </div>
+        </div>
+    </header>
+
+    <main class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
+
+        <section id="overview" class="mb-12 scroll-mt-20">
+            <h2 class="section-title text-3xl font-bold mb-6 text-sky-700">Überblick: BMWs datengesteuerte Transformation</h2>
+            <p class="mb-4 text-lg">
+                Die BMW Group positioniert sich als führendes Unternehmen in der datengesteuerten Innovation innerhalb der Automobilindustrie. Big Data und Künstliche Intelligenz (KI) sind grundlegende Säulen für die zukünftige Wettbewerbsfähigkeit. Die Strategie zielt darauf ab, bestehende Abläufe zu optimieren und völlig neue Geschäftsmodelle sowie Kundenerlebnisse zu ermöglichen.
+            </p>
+            <div class="grid md:grid-cols-2 gap-6">
+                <div class="card">
+                    <h3 class="text-xl font-semibold mb-2 text-sky-600">Kern der Strategie</h3>
+                    <p>BMW nutzt immense Datenmengen aus vernetzten Fahrzeugen, Produktionslinien und Kundeninteraktionen. Diese Daten speisen fortschrittliche KI-Anwendungen entlang der gesamten Wertschöpfungskette – von hyper-personalisierten Fahrerlebnissen und vorausschauender Wartung bis hin zu hocheffizienter Fertigung und resilienten Lieferketten. Strategische Partnerschaften (z.B. mit AWS, Microsoft Azure) und ein Engagement für ethische KI untermauern diesen Ansatz.</p>
+                </div>
+                <div class="card bg-sky-600 text-white">
+                    <h3 class="text-xl font-semibold mb-2">Schon gewusst?</h3>
+                    <p class="text-3xl font-bold" id="dynamicStatValue">10 PB+</p>
+                    <p>Daten werden allein im Cloud Data Hub von BMW verwaltet, was die enorme Datenmenge verdeutlicht (Quelle: AWS [3]).</p>
+                </div>
+            </div>
+             <p class="mt-4">
+                Diese Anwendung bietet einen interaktiven Einblick in die verschiedenen Facetten von BMWs Big Data- und KI-Strategie, basierend auf dem bereitgestellten Analysebericht. Nutzen Sie die Navigation, um spezifische Bereiche zu erkunden.
+            </p>
+        </section>
+
+        <section id="four-vs" class="mb-12 scroll-mt-20">
+            <h2 class="section-title text-3xl font-bold mb-6 text-sky-700">Big Data @ BMW: Die Vier V's</h2>
+            <p class="mb-6 text-lg">Die Nutzung von Big Data bei BMW lässt sich durch die vier V's charakterisieren: Volume (Menge), Variety (Vielfalt), Velocity (Geschwindigkeit) und Veracity (Wahrhaftigkeit/Qualität). Diese Dimensionen verdeutlichen das Potenzial und die Komplexität der Datenlandschaft des Unternehmens.</p>
+            
+            <div class="grid md:grid-cols-2 lg:grid-cols-4 gap-6">
+                <div class="card">
+                    <div class="flex items-center mb-3 flex-shrink-0 flex-wrap-container">
+                        <span class="text-3xl mr-3">📊</span>
+                        <h3 class="text-2xl font-semibold text-sky-600">Volume (Menge)</h3>
+                    </div>
+                    <p>BMW verarbeitet täglich Terabytes an Daten, insgesamt Petabytes. Der Cloud Data Hub (CDH) allein verwaltet über 10 PB Daten [3] und verarbeitet täglich 10 TB von 1,2 Mio. Fahrzeugen [2]. Die My BMW & MINI Apps generieren ca. 450 Mio. Anfragen und 3,2 TB Daten pro Tag [4].</p>
+                    <div class="mt-4 chart-container mx-auto h-64 sm:h-72">
+                        <canvas id="volumeChart"></canvas>
+                    </div>
+                    <p class="text-xs mt-2 text-center">Beispielhafte Darstellung der Datenmengen.</p>
+                </div>
+
+                <div class="card">
+                    <div class="flex items-center mb-3 flex-shrink-0 flex-wrap-container">
+                        <span class="text-3xl mr-3">🧩</span>
+                        <h3 class="text-2xl font-semibold text-sky-600">Variety (Vielfalt)</h3>
+                    </div>
+                    <p>BMW nutzt eine breite Palette von Datentypen:</p>
+                    <ul class="list-disc list-inside mt-2 space-y-1">
+                        <li><strong>Strukturiert:</strong> Transaktions-, CRM-, Fahrzeugstatusdaten [4, 8, 26, 27].</li>
+                        <li><strong>Semistrukturiert:</strong> Logdateien, App-Nutzungsdaten [4, 11, 13].</li>
+                        <li><strong>Unstrukturiert:</strong> Social Media [14], Videos [15], Bilder [9, 10, 16], Sprache [1, 28].</li>
+                    </ul>
+                    <p class="mt-2">Diese Vielfalt ermöglicht eine 360-Grad-Sicht und komplexe KI-Anwendungen.</p>
+                </div>
+
+                <div class="card">
+                    <div class="flex items-center mb-3 flex-shrink-0 flex-wrap-container">
+                        <span class="text-3xl mr-3">⚡️</span>
+                        <h3 class="text-2xl font-semibold text-sky-600">Velocity (Geschwindigkeit)</h3>
+                    </div>
+                    <p>Hohe Datenverarbeitungsgeschwindigkeit ist entscheidend:</p>
+                    <ul class="list-disc list-inside mt-2 space-y-1">
+                        <li>Echtzeit-Telemetriedaten von Fahrzeugen [2].</li>
+                        <li>450 Mio. tägliche Anfragen im App-Backend [4].</li>
+                        <li>MDR-Datenübertragung in Sekunden [6, 7].</li>
+                        <li>Echtzeit-Verkehrsberechnungen [5].</li>
+                    </ul>
+                    <p class="mt-2">Dies ermöglicht proaktives Handeln und kontinuierliche Optimierung.</p>
+                </div>
+
+                <div class="card">
+                    <div class="flex items-center mb-3 flex-shrink-0 flex-wrap-container">
+                        <span class="text-3xl mr-3">🛡️</span>
+                        <h3 class="text-2xl font-semibold text-sky-600">Veracity (Wahrhaftigkeit)</h3>
+                    </div>
+                    <p>BMW stellt Datenqualität sicher durch:</p>
+                    <ul class="list-disc list-inside mt-2 space-y-1">
+                        <li>Datentransformations-Pipelines [11].</li>
+                        <li>Automatisierte Tests (dbt) [11].</li>
+                        <li>Menschlich lesbarer Datenkatalog [2].</li>
+                        <li>Privacy by Design [2, 31].</li>
+                        <li>KI zur Qualitätskontrolle [9, 10, 23].</li>
+                    </ul>
+                    <p class="mt-2">Entscheidend für zuverlässige KI und Kundenvertrauen.</p>
+                </div>
+            </div>
+        </section>
+
+        <section id="ecosystem" class="mb-12 scroll-mt-20">
+            <h2 class="section-title text-3xl font-bold mb-6 text-sky-700">Daten-Ökosystem: Quellen, Sammlung & Verarbeitung</h2>
+            <p class="mb-6 text-lg">Das Datenökosystem von BMW ist komplex und stützt sich auf eine Vielzahl interner und externer Quellen sowie auf eine hochentwickelte Infrastruktur für Sammlung und Verarbeitung.</p>
+
+            <div class="grid md:grid-cols-2 gap-8">
+                <div>
+                    <h3 class="text-2xl font-semibold mb-3 text-sky-600">Datenquellen</h3>
+                    <div class="space-y-4">
+                        <div>
+                            <button class="accordion-toggle w-full text-left font-semibold p-3 bg-slate-100 hover:bg-slate-200 rounded-md flex justify-between items-center">
+                                Interne Quellen <span>▼</span>
+                            </button>
+                            <div class="accordion-content p-3 bg-white border rounded-b-md">
+                                <ul class="list-disc list-inside space-y-1">
+                                    <li>Fahrzeugtelemetrie & Sensordaten (Geschwindigkeit, Standort, Motorstatus) [2, 5, 8, 24, 28]</li>
+                                    <li>Produktions-IoT & Sensordaten (Kameras, Fabrikscanner, AIQX) [6, 7, 9, 10]</li>
+                                    <li>Kundendaten (CRM, App-Nutzung, BMW ID) [4, 13, 26]</li>
+                                    <li>Transaktionsdaten (Verkaufshistorie) [27]</li>
+                                    <li>F&E- & Testdaten (FOT, Simulatorstudien) [15]</li>
+                                </ul>
+                            </div>
+                        </div>
+                        <div>
+                            <button class="accordion-toggle w-full text-left font-semibold p-3 bg-slate-100 hover:bg-slate-200 rounded-md flex justify-between items-center">
+                                Externe Quellen <span>▼</span>
+                            </button>
+                            <div class="accordion-content p-3 bg-white border rounded-b-md">
+                                <ul class="list-disc list-inside space-y-1">
+                                    <li>Social Media Daten [14]</li>
+                                    <li>Marktforschungsdaten</li>
+                                    <li>Wetter- & Verkehrsdaten [28]</li>
+                                    <li>Partnerdaten (Alibaba, AWS, Microsoft Azure) [1, 2, 3, 4, 5, 6, 7, 11, 12, 17, 25]</li>
+                                    <li>Drohnen-, Unfall-, Lieferantendaten [15, 21]</li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div>
+                    <h3 class="text-2xl font-semibold mb-3 text-sky-600">Sammlung & Verarbeitung</h3>
+                    <p class="mb-2">Daten werden über vernetzte Fahrzeuge, digitale Plattformen, IoT-Geräte und Partnerschaften gesammelt. Die Verarbeitung erfolgt über eine Multi-Cloud-Strategie (AWS & Azure) mit zentralen Elementen wie dem Cloud Data Hub (CDH).</p>
+                    <div class="p-4 border rounded-md bg-white">
+                        <h4 class="font-semibold mb-2">Vereinfachter Datenfluss:</h4>
+                        <div class="space-y-2 text-sm">
+                            <div class="flex items-center">
+                                <span class="bg-sky-200 text-sky-700 px-2 py-1 rounded-md mr-2">Sammlung</span>
+                                <span class="text-slate-600">Fahrzeuge, Apps, IoT, Partner</span>
+                                <span class="mx-2">➔</span>
+                            </div>
+                            <div class="flex items-center">
+                                <span class="bg-sky-200 text-sky-700 px-2 py-1 rounded-md mr-2">Speicherung & Transformation</span>
+                                <span class="text-slate-600">Cloud Data Hub (AWS S3), Azure, Datenpipelines (dbt, Athena) [2, 3, 4, 6, 7, 11, 25]</span>
+                                <span class="mx-2">➔</span>
+                            </div>
+                            <div class="flex items-center">
+                                <span class="bg-sky-200 text-sky-700 px-2 py-1 rounded-md mr-2">Analyse & KI/ML</span>
+                                <span class="text-slate-600">SageMaker, GenAI, NLP [1, 2, 12, 28, 30, 33]</span>
+                                <span class="mx-2">➔</span>
+                            </div>
+                             <div class="flex items-center">
+                                <span class="bg-sky-200 text-sky-700 px-2 py-1 rounded-md mr-2">Anwendungen</span>
+                                <span class="text-slate-600">Personalisierung, Optimierung, Neue Dienste</span>
+                            </div>
+                        </div>
+                         <p class="text-xs mt-3">Klicken Sie auf die Quell-Kategorien links für Details.</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section id="applications" class="mb-12 scroll-mt-20">
+            <h2 class="section-title text-3xl font-bold mb-6 text-sky-700">Anwendungen & Innovation: Big Data & KI in Aktion</h2>
+            <p class="mb-6 text-lg">BMW nutzt Big Data und KI umfassend zur Optimierung von Geschäftsprozessen und zur Entwicklung innovativer Dienste. Entdecken Sie konkrete Beispiele in verschiedenen Bereichen.</p>
+            
+            <div class="mb-6 flex space-x-2 overflow-x-auto pb-2">
+                <button class="application-tab-button tab-button active px-4 py-2 rounded-md font-medium text-sm whitespace-nowrap" data-filter="all">Alle Bereiche</button>
+                <button class="application-tab-button tab-button px-4 py-2 rounded-md font-medium text-sm whitespace-nowrap" data-filter="marketing">Marketing & Vertrieb</button>
+                <button class="application-tab-button tab-button px-4 py-2 rounded-md font-medium text-sm whitespace-nowrap" data-filter="produktentwicklung">Produktentwicklung</button>
+                <button class="application-tab-button tab-button px-4 py-2 rounded-md font-medium text-sm whitespace-nowrap" data-filter="kundenservice">Kundenservice</button>
+                <button class="application-tab-button tab-button px-4 py-2 rounded-md font-medium text-sm whitespace-nowrap" data-filter="produktion">Produktion</button>
+                <button class="application-tab-button tab-button px-4 py-2 rounded-md font-medium text-sm whitespace-nowrap" data-filter="lieferkette">Lieferkette</button>
+                <button class="application-tab-button tab-button px-4 py-2 rounded-md font-medium text-sm whitespace-nowrap" data-filter="mobilitaet">Mobilität</button>
+            </div>
+
+            <div id="applicationsGrid" class="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
+                </div>
+        </section>
+
+        <section id="competition" class="mb-12 scroll-mt-20">
+            <h2 class="section-title text-3xl font-bold mb-6 text-sky-700">Wettbewerbslandschaft & BMWs Differenzierung</h2>
+            <p class="mb-6 text-lg">Ein Blick auf die Hauptkonkurrenten und wie sich BMW im Bereich Big Data und KI abgrenzt.</p>
+            <div class="overflow-x-auto bg-white p-4 rounded-lg shadow-md">
+                <table class="min-w-full divide-y divide-slate-200">
+                    <thead class="bg-slate-50">
+                        <tr>
+                            <th class="px-6 py-3 text-left text-xs font-medium text-slate-500 uppercase tracking-wider">Kriterium</th>
+                            <th class="px-6 py-3 text-left text-xs font-medium text-slate-500 uppercase tracking-wider">BMW</th>
+                            <th class="px-6 py-3 text-left text-xs font-medium text-slate-500 uppercase tracking-wider">Mercedes-Benz</th>
+                            <th class="px-6 py-3 text-left text-xs font-medium text-slate-500 uppercase tracking-wider">Audi</th>
+                            <th class="px-6 py-3 text-left text-xs font-medium text-slate-500 uppercase tracking-wider">Tesla</th>
+                        </tr>
+                    </thead>
+                    <tbody class="bg-white divide-y divide-slate-200 text-sm">
+                        <tr>
+                            <td class="px-6 py-4 whitespace-nowrap font-semibold">Primärer Fokus</td>
+                            <td class="px-6 py-4">Ganzheitlich (Produktion, Connected Car, Kundenerlebnis, F&E, Lieferkette)</td>
+                            <td class="px-6 py-4">Produktionseffizienz, Digitale Dienste [34, 46]</td>
+                            <td class="px-6 py-4">Produktionsoptimierung, Fahrerassistenz [37, 40, 47, 48]</td>
+                            <td class="px-6 py-4">Autonomes Fahren (FSD), Fahrzeugleistung [18, 42, 43, 44]</td>
+                        </tr>
+                        <tr>
+                            <td class="px-6 py-4 whitespace-nowrap font-semibold">Cloud-Strategie</td>
+                            <td class="px-6 py-4">Multi-Cloud (AWS CDH, Azure für Apps/F&E) [2, 3, 4, 5, 6, 7, 11, 12, 17, 25]</td>
+                            <td class="px-6 py-4">Microsoft Azure, Qlik [34, 46]</td>
+                            <td class="px-6 py-4">Edge Cloud 4 Produktion [47]</td>
+                            <td class="px-6 py-4">Eigene Rechenzentren</td>
+                        </tr>
+                        <tr>
+                            <td class="px-6 py-4 whitespace-nowrap font-semibold">KI-Innovationsansatz</td>
+                            <td class="px-6 py-4">In-House-KI, GenAI, Open-Source-Algorithmen, Synthetische Daten [9, 10, 16, 17, 30, 33, 49]</td>
+                            <td class="px-6 py-4">KI/ML für prädiktive Modelle [34]</td>
+                            <td class="px-6 py-4">KI in Produktion (100+ Anwendungsfälle) [40]</td>
+                            <td class="px-6 py-4">Deep Learning für FSD, OTA-Updates [18, 42, 43]</td>
+                        </tr>
+                         <tr>
+                            <td class="px-6 py-4 whitespace-nowrap font-semibold">BMWs Differenzierung</td>
+                            <td colspan="4" class="px-6 py-4">
+                                <ul class="list-disc list-inside space-y-1">
+                                    <li>Pionier bei In-House-KI für Produktion [37]</li>
+                                    <li>Umfassende Multi-Cloud-Strategie [2, 3, 4, 5, 6, 7, 11, 12, 17, 25]</li>
+                                    <li>Open-Source-Initiativen (GitHub) [49]</li>
+                                    <li>Einzigartige Datenbestände (FOT, SORDI) [15, 16]</li>
+                                    <li>Ausgewogener KI-Ansatz mit starken ethischen Richtlinien [1, 9, 10, 50, 51]</li>
+                                </ul>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </section>
+
+        <section id="ethics" class="mb-12 scroll-mt-20">
+            <h2 class="section-title text-3xl font-bold mb-6 text-sky-700">Ethik & Zukunft</h2>
+            <p class="mb-6 text-lg">BMW begegnet aktiv den Herausforderungen und ethischen Aspekten seiner Datenstrategie und blickt gleichzeitig in eine innovationsgetriebene Zukunft.</p>
+            <div class="grid md:grid-cols-2 gap-8">
+                <div class="card">
+                    <h3 class="text-2xl font-semibold mb-3 text-sky-600">KI: Rolle & Zukunftsausblick</h3>
+                    <ul class="list-disc list-inside space-y-1">
+                        <li>Umfassende Integration zur Verbesserung von Kundenerlebnis, Produktqualität und Effizienz [50].</li>
+                        <li>Systematischer Einsatz von Generativer KI (GenAI) im Einkauf und Cloud-Management [12, 30, 33].</li>
+                        <li>Beschleunigte KI-Integration in China [1].</li>
+                        <li>"Superhirne" in Neue Klasse Modellen ab 2025 mit 20x Rechenleistung für KI [5, 33].</li>
+                        <li>Zukünftige GenAI-Anwendungen für proaktive Lieferkettenüberwachung und Optimierung [30].</li>
+                    </ul>
+                </div>
+                 <div class="card">
+                    <h3 class="text-2xl font-semibold mb-3 text-sky-600">Ethische Aspekte & Kommunikation</h3>
+                     <div>
+                        <button class="accordion-toggle w-full text-left font-semibold p-3 bg-slate-100 hover:bg-slate-200 rounded-md flex justify-between items-center mt-2">
+                            Datenschutz & Sicherheit <span>▼</span>
+                        </button>
+                        <div class="accordion-content p-3 bg-white border rounded-b-md">
+                            <ul class="list-disc list-inside space-y-1">
+                                <li>Höchste Priorität für Vertraulichkeit und Integrität [22].</li>
+                                <li>DSGVO- und CCPA-Konformität [8].</li>
+                                <li>Zustimmungsmanagement (CarData) [8, 24, 31, 52].</li>
+                                <li>Sichere Speicherung & Übertragung [8, 22].</li>
+                                <li>Privacy by Design [31].</li>
+                            </ul>
+                        </div>
+                    </div>
+                    <div>
+                        <button class="accordion-toggle w-full text-left font-semibold p-3 bg-slate-100 hover:bg-slate-200 rounded-md flex justify-between items-center mt-2">
+                            Bias-Minderung & Verantwortungsvolle KI <span>▼</span>
+                        </button>
+                        <div class="accordion-content p-3 bg-white border rounded-b-md">
+                            <ul class="list-disc list-inside space-y-1">
+                                <li>Verantwortungsvoller KI-Einsatz zur Vermeidung von Schäden und Bias [50].</li>
+                                <li>Strenge Tests mit Human-in-the-Loop [32].</li>
+                                <li>Ethik-Kodex für KI basierend auf EU-Richtlinien (7 Prinzipien) [50, 51].</li>
+                                <li>Mitarbeiterschulung [33].</li>
+                            </ul>
+                        </div>
+                    </div>
+                     <div>
+                        <button class="accordion-toggle w-full text-left font-semibold p-3 bg-slate-100 hover:bg-slate-200 rounded-md flex justify-between items-center mt-2">
+                            Kommunikation der Datennutzung <span>▼</span>
+                        </button>
+                        <div class="accordion-content p-3 bg-white border rounded-b-md">
+                            <ul class="list-disc list-inside space-y-1">
+                                <li>Transparenzinitiativen (CarData-Berichte) [8].</li>
+                                <li>In-Fahrzeug-Datenschutzeinstellungen [13, 52].</li>
+                                <li>Zustimmungsbasiertes Modell [8].</li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="mt-8 card">
+                 <h3 class="text-2xl font-semibold mb-3 text-sky-600">Empfehlungen für die Zukunft</h3>
+                 <ul class="list-disc list-inside space-y-1">
+                    <li>Verbesserte prädiktive Analysen für Lieferketten-Resilienz.</li>
+                    <li>Hyper-personalisierte Fahrerlebnisse (z.B. mit biometrischen Daten, mit Zustimmung).</li>
+                    <li>KI-gesteuerte Optimierung der Kreislaufwirtschaft.</li>
+                    <li>Proaktives Flottenmanagement für Geschäftskunden.</li>
+                    <li>Stärkung ethischer KI-Rahmenwerke (Audits, XAI).</li>
+                    <li>Nutzung von Partnerschaften für kontinuierliche Innovation (autonomes Fahren, GenAI, Smart City).</li>
+                 </ul>
+            </div>
+        </section>
+        
+        <section id="conclusion" class="mb-12 scroll-mt-20">
+            <h2 class="section-title text-3xl font-bold mb-6 text-sky-700">Fazit</h2>
+            <div class="card">
+                <p class="mb-4">Die BMW Group hat sich als Vorreiter bei der Nutzung von Big Data und KI etabliert und wandelt sich von einem traditionellen Automobilhersteller zu einem datengesteuerten Mobilitätsanbieter.</p>
+                <p class="mb-4">Strategische Investitionen in Cloud-Plattformen, umfassende Datenerfassung und KI-Anwendungen entlang der Wertschöpfungskette untermauern dieses Engagement. Die proaktive Haltung zu ethischer KI und Datenschutz festigt die Führungsposition.</p>
+                <p>Die Zukunft der Mobilität wird zunehmend personalisiert, autonom und nahtlos integriert sein. BMWs strategischer Ansatz im Umgang mit Big Data und KI sichert dem Unternehmen Relevanz und einen entscheidenden Wettbewerbsvorteil im Zeitalter der intelligenten Mobilität.</p>
+            </div>
+        </section>
+
+        <section id="sources" class="mb-12 scroll-mt-20">
+            <h2 class="section-title text-3xl font-bold mb-6 text-sky-700">Quellen</h2>
+            <div class="card">
+                <ol class="list-decimal list-inside space-y-2 text-sm">
+                    <li>[1] [https://autonews.gasgoo.com/new_energy/70036512.html](https://autonews.gasgoo.com/new_energy/70036512.html)</li>
+                    <li>[2] [https://aws.amazon.com/solutions/case-studies/bmw-group-case-study/](https://aws.amazon.com/solutions/case-studies/bmw-group-case-study/)</li>
+                    <li>[3] [https://aws.amazon.com/blogs/big-data/how-bmw-streamlined-data-access-using-aws-lake-formation-fine-grained-access-control/](https://aws.amazon.com/blogs/big-data/how-bmw-streamlined-data-access-using-aws-lake-formation-fine-grained-access-control/)</li>
+                    <li>[4] [https://www.microsoft.com/en/customers/story/18757-bmw-group-azure](https://www.microsoft.com/en/customers/story/18757-bmw-group-azure)</li>
+                    <li>[5] [https://www.youtube.com/watch?v=f246b185631/](https://www.youtube.com/watch?v=f246b185631/)</li>
+                    <li>[6] [https://www.microsoft.com/en/customers/story/19769-bmw-ag-azure-app-service](https://www.microsoft.com/en/customers/story/19769-bmw-ag-azure-app-service)</li>
+                    <li>[7] [https://technologymagazine.com/articles/bmw-microsoft-turbocharging-vehicle-development-with-ai](https://technologymagazine.com/articles/bmw-microsoft-turbocharging-vehicle-development-with-ai)</li>
+                    <li>[8] [https://www.bmwgroup.com/en/innovation/connected-car/cardata.html](https://www.bmwgroup.com/en/innovation/connected-car/cardata.html)</li>
+                    <li>[9] [https://disruptionhub.com/how-does-bmw-use-ai/](https://disruptionhub.com/how-does-bmw-use-ai/)</li>
+                    <li>[10] [https://www.virtasant.com/ai-today/ai-in-product-development-netflix-bmw/](https://www.virtasant.com/ai-today/ai-in-product-development-netflix-bmw/)</li>
+                    <li>[11] [https://aws.amazon.com/blogs/big-data/how-bmw-group-built-a-serverless-terabyte-scale-data-transformation-architecture-with-dbt-and-amazon-athena/](https://aws.amazon.com/blogs/big-data/how-bmw-group-built-a-serverless-terabyte-scale-data-transformation-architecture-with-dbt-and-amazon-athena/)</li>
+                    <li>[12] [https://aws.amazon.com/blogs/machine-learning/innovating-at-speed-bmws-generative-ai-solution-for-cloud-incident-analysis/](https://aws.amazon.com/blogs/machine-learning/innovating-at-speed-bmws-generative-ai-solution-for-cloud-incident-analysis/)</li>
+                    <li>[13] [https://faq.bmwusa.com/s/article/BMW-iDrive-OS7-Personalization-Data-protection-htGtM?language=en_US](https://faq.bmwusa.com/s/article/BMW-iDrive-OS7-Personalization-Data-protection-htGtM?language=en_US)</li>
+                    <li>[14] [https://www.sprintzeal.com/blog/bmw-marketing-strategy](https://www.sprintzeal.com/blog/bmw-marketing-strategy)</li>
+                    <li>[15] [https://www.bmwgroup.com/scm-driver/en/get-to-know-scm/data-for-parametrisation.html](https://www.bmwgroup.com/scm-driver/en/get-to-know-scm/data-for-parametrisation.html)</li>
+                    <li>[16] [https://www.nvidia.com/en-us/case-studies/bmw-optimizes-production-with-ai-and-dgx-systems/](https://www.nvidia.com/en-us/case-studies/bmw-optimizes-production-with-ai-and-dgx-systems/)</li>
+                    <li>[17] [https://www.youtube.com/watch?v=WeNlAbIDgp4](https://www.youtube.com/watch?v=WeNlAbIDgp4)</li>
+                    <li>[18] [https://www.cleverence.com/articles/business-blogs/how-tesla-and-bmw-use-ai-driven-predictive-maintenance-to-reduce-downtime/](https://www.cleverence.com/articles/business-blogs/how-tesla-and-bmw-use-ai-driven-predictive-maintenance-to-reduce-downtime/)</li>
+                    <li>[19] [https://grjenkin.com/articles/category/big-data/6689694/03/12/2024/how-bmw-uses-artificial-intelligence-and-big-data-to-design-and-build-cars-of-tomorrow-7wdata/](https://grjenkin.com/articles/category/big-data/6689694/03/12/2024/how-bmw-uses-artificial-intelligence-and-big-data-to-design-and-build-cars-of-tomorrow-7wdata/)</li>
+                    <li>[20] [https://www.youtube.com/watch?v=GvlEstLPp9s](https://www.youtube.com/watch?v=GvlEstLPp9s)</li>
+                    <li>[21] [https://www.xenonstack.com/blog/supply-chains-in-automotive-industry](https://www.xenonstack.com/blog/supply-chains-in-automotive-industry)</li>
+                    <li>[22] [https://www.bmwgroup.com/en/general/data_privacy.html](https://www.bmwgroup.com/en/general/data_privacy.html)</li>
+                    <li>[23] [https://www.automotiveworld.com/news-releases/bmw-group-artificial-intelligence-as-a-quality-booster/](https://www.automotiveworld.com/news-releases/bmw-group-artificial-intelligence-as-a-quality-booster/)</li>
+                    <li>[24] [https://www.youtube.com/watch?v=36k_4KaDt5c](https://www.youtube.com/watch?v=36k_4KaDt5c)</li>
+                    <li>[25] [https://aws.amazon.com/solutions/case-studies/innovators/bmw/](https://www.aws.amazon.com/solutions/case-studies/innovators/bmw/)</li>
+                    <li>[26] [https://www.bmwusa.com/explore/connecteddrive.html](https://www.bmwusa.com/explore/connecteddrive.html)</li>
+                    <li>[27] [https://www.cleverence.com/articles/business-blogs/how-toyota-and-bmw-dealerships-use-predictive-analytics-to-manage-inventory/](https://www.cleverence.com/articles/business-blogs/how-toyota-and-bmw-dealerships-use-predictive-analytics-to-manage-inventory/)</li>
+                    <li>[28] [https://patentpc.com/blog/ai-and-bmw-patenting-the-future-of-cars](https://patentpc.com/blog/ai-and-bmw-patenting-the-future-of-cars)</li>
+                    <li>[29] [https://www.youtube.com/watch?v=ca57wdzaibU](https://www.youtube.com/watch?v=ca57wdzaibU)</li>
+                    <li>[30] [https://www.automotiveworld.com/news-releases/greater-efficiency-and-productivity-with-artificial-intelligence-generative-ai-in-bmw-group-purchasing/](https://www.automotiveworld.com/news-releases/greater-efficiency-and-productivity-with-artificial-intelligence-generative-ai-in-bmw-group-purchasing/)</li>
+                    <li>[31] [https://patentpc.com/blog/the-privacy-debate-around-bmws-connected-car-patents](https://patentpc.com/blog/the-privacy-debate-around-bmws-connected-car-patents)</li>
+                    <li>[32] [https://think-it.io/ai-product-development](https://think-it.io/ai-product-development)</li>
+                    <li>[33] [https://www.bmwgroup.com/en/report/2024/downloads/BMW-Group-Report-2024-en.pdf](https://www.bmwgroup.com/en/report/2024/downloads/BMW-Group-Report-2024-en.pdf)</li>
+                    <li>[34] [https://www.mercedes-benz-mobility.com/en/who-we-are/stories/creating-value-with-technology/](https://www.mercedes-benz-mobility.com/en/who-we-are/stories/creating-value-with-technology/)</li>
+                    <li>[35] [https://inmind.ai/case-study/palantir-bmw-group/](https://inmind.ai/case-study/palantir-bmw-group/)</li>
+                    <li>[36] [https://jobs.bmwgroup.com/job/Munich-Intern-Data-Science-%28fmx%29-BY-80809/1169460401/](https://jobs.bmwgroup.com/job/Munich-Intern-Data-Science-%28fmx%29-BY-80809/1169460401/)</li>
+                    <li>[37] [https://www.gisma.com/blog/from-audi-to-mercedes-how-ai-and-data-science-are-shaping-the-new-generation-of-cars](https://www.gisma.com/blog/from-audi-to-mercedes-how-ai-and-data-science-are-shaping-the-new-generation-of-cars)</li>
+                    <li>[38] [https://www.birminghambmw.com/blog/2025/march/7/bmw-vs-mercedes-benz-which-luxury-brand-is-right-for-your-alabama-drives.htm](https://www.birminghambmw.com/blog/2025/march/7/bmw-vs-mercedes-benz-which-luxury-brand-is-right-for-your-alabama-drives.htm)</li>
+                    <li>[39] [https://www.reddit.com/r/BMW/comments/1js56qi/audi_vs_their_main_rivals/](https://www.reddit.com/r/BMW/comments/1js56qi/audi_vs_their_main_rivals/)</li>
+                    <li>[40] [https://worldtrader24.de/top-audi-innovations-how-audi-ai-is-leading-the-automotive-revolution/](https://worldtrader24.de/top-audi-innovations-how-audi-ai-is-leading-the-automotive-revolution/)</li>
+                    <li>[41] [https://insideevs.com/features/749132/what-is-in-car-ai-for/](https://insideevs.com/features/749132/what-is-in-car-ai-for/)</li>
+                    <li>[42] [https://www.youtube.com/watch?v=7lX49ptyA4s](https://www.youtube.com/watch?v=7lX49ptyA4s)</li>
+                    <li>[43] [https://conciliac.com/what-does-tesla-do-with-the-data-it-collects-and-how-is-this-related-to-proper-data-management/](https://conciliac.com/what-does-tesla-do-with-the-data-it-collects-and-how-is-this-related-to-proper-data-management/)</li>
+                    <li>[44] [https://trginternational.com/blog/data-analytics-for-manufacturing-the-tesla-motors-case-study/](https://trginternational.com/blog/data-analytics-for-manufacturing-the-tesla-motors-case-study/)</li>
+                    <li>[45] [https://www.trefis.com/data/companies/TSLA/no-login-required/UllJiioV/BMW-And-Tesla-A-Detailed-Comparison](https://www.trefis.com/data/companies/TSLA/no-login-required/UllJiioV/BMW-And-Tesla-A-Detailed-Comparison)</li>
+                    <li>[46] [https://www.qlik.com/blog/data-is-making-manufacturing-more-resilient-efficient-and-sustainable-at-mercedes-benz](https://www.qlik.com/blog/data-is-making-manufacturing-more-resilient-efficient-and-sustainable-at-mercedes-benz)</li>
+                    <li>[47] [https://manufacturing-today.com/news/discover-audis-ambitious-roadmap-to-achieving-e-mobility/](https://manufacturing-today.com/news/discover-audis-ambitious-roadmap-to-achieving-e-mobility/)</li>
+                    <li>[48] [https://www.audi.com/en/innovation/future-technology/artificial-intelligence/](https://www.audi.com/en/innovation/future-technology/artificial-intelligence/)</li>
+                    <li>[49] [https://www.bmwblog.com/2019/12/13/bmw-shares-ai-algorithms-used-in-production-available-on-github/](https://www.bmwblog.com/2019/12/13/bmw-shares-ai-algorithms-used-in-production-available-on-github/)</li>
+                    <li>[50] [https://www.trendhunter.com/trends/bmw-ai](https://www.trendhunter.com/trends/bmw-ai)</li>
+                    <li>[51] [https://syncedreview.com/2019/04/15/biweekly-new-european-ethical-ai-guidelines-microsoft-bmw-partner-on-iot-manufacturing/](https://syncedreview.com/2019/04/15/biweekly-new-european-ethical-ai-guidelines-microsoft-bmw-partner-on-iot-manufacturing/)</li>
+                    <li>[52] [https://www.youtube.com/watch?v=z9WZ7i-zOz4&pp=0gcJCdgAo7VqN5tD](https://www.youtube.com/watch?v=z9WZ7i-zOz4&pp=0gcJCdgAo7VqN5tD)</li>
+                </ol>
+            </div>
+        </section>
+
+    </main>
+
+    <footer class="bg-slate-800 text-slate-300 py-8 text-center">
+        <p>© <span id="currentYear"></span> Interaktive Analyse der BMW Big Data & KI Strategie.</p>
+        <p class="text-xs mt-1">Erstellt basierend auf dem bereitgestellten Analysebericht.</p>
+    </footer>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function () {
+            // Mobile menu toggle
+            const menuButton = document.getElementById('mobile-menu-button');
+            const mobileMenu = document.getElementById('mobile-menu');
+            if (menuButton && mobileMenu) {
+                menuButton.addEventListener('click', () => {
+                    const isExpanded = menuButton.getAttribute('aria-expanded') === 'true' || false;
+                    menuButton.setAttribute('aria-expanded', !isExpanded);
+                    mobileMenu.classList.toggle('hidden');
+                    menuButton.querySelectorAll('svg').forEach(svg => svg.classList.toggle('hidden'));
+                });
+            }
+
+            // Smooth scrolling for nav links
+            document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+                anchor.addEventListener('click', function (e) {
+                    e.preventDefault();
+                    const targetId = this.getAttribute('href');
+                    const targetElement = document.querySelector(targetId);
+                    if (targetElement) {
+                        targetElement.scrollIntoView({ behavior: 'smooth' });
+                        if (mobileMenu && !mobileMenu.classList.contains('hidden')) {
+                             menuButton.click(); // Close mobile menu if open
+                        }
+                    }
+                });
+            });
+            
+            // Accordion toggle
+            document.querySelectorAll('.accordion-toggle').forEach(button => {
+                button.addEventListener('click', () => {
+                    const content = button.nextElementSibling;
+                    const isOpening = content.style.maxHeight === '0px' || !content.style.maxHeight;
+                    
+                    document.querySelectorAll('.accordion-content').forEach(el => {
+                        if (el !== content) { // Close other accordions
+                           // el.style.maxHeight = '0px';
+                           // el.previousElementSibling.querySelector('span').textContent = '▼';
+                        }
+                    });
+
+                    if (isOpening) {
+                        content.style.maxHeight = content.scrollHeight + "px";
+                        button.querySelector('span').textContent = '▲';
+                    } else {
+                        content.style.maxHeight = '0px';
+                        button.querySelector('span').textContent = '▼';
+                    }
+                });
+            });
+
+            // Volume Chart
+            const volumeCtx = document.getElementById('volumeChart');
+            if (volumeCtx) {
+                new Chart(volumeCtx, {
+                    type: 'bar',
+                    data: {
+                        labels: ['CDH Gesamt (PB)', 'CDH Tägl. Fzg. (TB)', 'Apps Tägl. (TB)', 'Plattform Aut. Fahren (PB)'],
+                        datasets: [{
+                            label: 'Datenmenge',
+                            data: [10, 10, 3.2, 200], // Assuming 200PB for autonomous driving platform as "several hundred"
+                            backgroundColor: [
+                                'rgba(59, 130, 246, 0.7)', // blue-500
+                                'rgba(34, 197, 94, 0.7)',  // green-500
+                                'rgba(239, 68, 68, 0.7)',   // red-500
+                                'rgba(249, 115, 22, 0.7)'  // orange-500
+                            ],
+                            borderColor: [
+                                'rgba(59, 130, 246, 1)',
+                                'rgba(34, 197, 94, 1)',
+                                'rgba(239, 68, 68, 1)',
+                                'rgba(249, 115, 22, 1)'
+                            ],
+                            borderWidth: 1
+                        }]
+                    },
+                    options: {
+                        responsive: true,
+                        maintainAspectRatio: false,
+                        scales: {
+                            y: { beginAtZero: true, ticks: { color: '#475569'}, grid: { color: '#e2e8f0'} },
+                            x: { ticks: { color: '#475569'}, grid: { display: false } }
+                        },
+                        plugins: {
+                            legend: { display: false },
+                            tooltip: {
+                                callbacks: {
+                                    label: function(context) {
+                                        let label = context.dataset.label || '';
+                                        if (label) { label += ': '; }
+                                        if (context.parsed.y !== null) {
+                                            label += context.parsed.y + (context.label.includes('(PB)') ? ' PB' : ' TB');
+                                        }
+                                        return label;
+                                    }
+                                }
+                            }
+                        }
+                    }
+                });
+            }
+
+            // Applications Data & Filtering
+            const applicationsData = [
+                { category: 'marketing', title: 'Personalisierte Kundenerlebnisse', text: 'KI lernt Fahrerpräferenzen (Sitze, Klima, Musik) und passt das Marketing an die Kundenidentität an, um Loyalität zu fördern. [14, 28, 31]', icon: '🎯' },
+                { category: 'produktentwicklung', title: 'KI-gesteuerte Entwicklung', text: 'KI verbessert Komfort und Sicherheit, beschleunigt Formulierungsprozesse durch Simulation und unterstützt Designprozesse mit bildgenerierender KI. [9, 10, 33]', icon: '🛠️' },
+                { category: 'produktentwicklung', title: 'CarData Plattform', text: 'Kunden teilen (mit Zustimmung) Fahrzeugdaten für personalisierte Dienste von Drittanbietern (z.B. Versicherungen). [8, 24]', icon: '🤝' },
+                { category: 'produktentwicklung', title: 'Intelligent Personal Assistant', text: 'Sprachgesteuerter Assistent, der Präferenzen lernt und durch KI (Alibaba, Banma) intelligenter wird. [1, 26]', icon: '🗣️' },
+                { category: 'kundenservice', title: 'Automatisierte Incident-Analyse', text: 'Generative KI (Amazon Bedrock Agents) beschleunigt die Ursachenanalyse bei Cloud-Vorfällen erheblich. [12]', icon: '🔍' },
+                { category: 'produktion', title: 'KI-Qualitätskontrolle', text: 'Präzise Bolzenplatzierung (spart >1 Mio. USD/Jahr), Identifizierung von Produktionsproblemen mit Kameras, GenAI4Q für maßgeschneiderte Inspektionen. [9, 10, 23]', icon: '🏭' },
+                { category: 'produktion', title: 'Synthetische Daten (SORDI)', text: 'NVIDIA DGX generiert fotorealistische Bilder für KI-Training in der Produktion, beschleunigt QA-Aufgaben. [16, 17]', icon: '🖼️' },
+                { category: 'lieferkette', title: 'Risikomanagement & Resilienz', text: 'KI verfolgt Lieferantenrisiken, Supply Chain Control Tower überwacht Ereignisse, Palantir Foundry optimiert Logistik. [21, 35]', icon: '🔗' },
+                { category: 'mobilitaet', title: 'Prädiktive Wartung', text: 'KI kombiniert IoT-Sensoren und Echtzeitdaten zur Vorhersage des Wartungsbedarfs kritischer Komponenten. [18]', icon: '🔩' },
+                { category: 'mobilitaet', title: 'Autonomes Fahren', text: 'KI ist entscheidend für die Echtzeitanalyse von Kamera- & Sensordaten, Ziel: Level 5 Autonomie. [5, 19]', icon: '🚗' }
+            ];
+
+            const applicationsGrid = document.getElementById('applicationsGrid');
+            const appTabButtons = document.querySelectorAll('.application-tab-button');
+
+            function displayApplications(filter = 'all') {
+                if (!applicationsGrid) return;
+                applicationsGrid.innerHTML = '';
+                const filteredData = filter === 'all' ? applicationsData : applicationsData.filter(app => app.category === filter);
+                
+                if (filteredData.length === 0) {
+                    applicationsGrid.innerHTML = `<p class="col-span-full text-center text-slate-500">Keine Anwendungen für diesen Bereich gefunden.</p>`;
+                    return;
+                }
+
+                filteredData.forEach(app => {
+                    const card = `
+                        <div class="card flex flex-col h-full">
+                            <div class="flex items-center mb-3 flex-wrap-container">
+                                <span class="text-3xl mr-3">${app.icon}</span>
+                                <h4 class="text-lg font-semibold text-sky-600">${app.title}</h4>
+                            </div>
+                            <p class="text-sm text-slate-600 flex-grow min-w-0">${app.text}</p>
+                        </div>
+                    `;
+                    applicationsGrid.innerHTML += card;
+                });
+            }
+            
+            if (appTabButtons.length > 0 && applicationsGrid) {
+                appTabButtons.forEach(button => {
+                    button.addEventListener('click', () => {
+                        appTabButtons.forEach(btn => btn.classList.remove('active'));
+                        button.classList.add('active');
+                        displayApplications(button.dataset.filter);
+                    });
+                });
+                displayApplications(); // Initial display
+            }
+
+
+            // Set current year in footer
+            const currentYearElement = document.getElementById('currentYear');
+            if (currentYearElement) {
+                currentYearElement.textContent = new Date().getFullYear();
+            }
+
+            // Active Nav Link highlighting on scroll (simplified)
+            const sections = document.querySelectorAll('section');
+            const navLinks = document.querySelectorAll('header nav a');
+
+            window.addEventListener('scroll', () => {
+                let current = '';
+                sections.forEach(section => {
+                    const sectionTop = section.offsetTop;
+                    if (pageYOffset >= sectionTop - 80) { // 80px offset for sticky header
+                        current = section.getAttribute('id');
+                    }
+                });
+
+                navLinks.forEach(link => {
+                    link.classList.remove('active', 'text-sky-600');
+                    link.classList.add('text-slate-700');
+                    if (link.getAttribute('href').substring(1) === current) {
+                        link.classList.add('active', 'text-sky-600');
+                        link.classList.remove('text-slate-700');
+                    }
+                });
+                // For mobile menu
+                document.querySelectorAll('#mobile-menu a').forEach(link => {
+                     link.classList.remove('bg-sky-100', 'text-sky-700');
+                     if (link.getAttribute('href').substring(1) === current) {
+                        link.classList.add('bg-sky-100', 'text-sky-700');
+                    }
+                });
+            });
+
+        });
+    </script>
+</body>
+</html>
